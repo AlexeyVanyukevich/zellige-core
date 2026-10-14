@@ -1,0 +1,19 @@
+{
+  "name": "@zellige/core",
+  "version": "0.0.0",
+  "description": "Design tokens, CSS and reference markup for the zellige component kit",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "prettier": "charter/stacks/typescript/prettier",
+  "devDependencies": {
+    "charter": "github:AlexeyVanyukevich/charter#v3.1.0",
+    "oxlint": "^1.88.0",
+    "oxlint-tsgolint": "^7.0.2004",
+    "prettier": "^3.9.10",
+    "typescript": "^7.0.2"
+  }
+}

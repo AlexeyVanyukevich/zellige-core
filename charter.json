@@ -1,0 +1,5 @@
+{
+  "workspaces": {
+    ".": ["frontend", "typescript", "playwright"]
+  }
+}

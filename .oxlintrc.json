@@ -1,0 +1,3 @@
+{
+  "extends": ["./node_modules/charter/stacks/typescript/oxlint.json"]
+}
