@@ -20,8 +20,9 @@ prepare() {
   need_hooks
 }
 
-# Types (`tsc`), lint (`oxlint --deny-warnings`) and the suites join this with the first source
-# file: until then both tools find no input and fail on that alone.
+# Types (`tsc`), lint (`oxlint --deny-warnings`), the markup checks (`html-validate`,
+# `charter scan`) and the suites join this with the first source and HTML files: until then
+# each tool finds no input and fails on that alone.
 scenario_check() {
   prepare
   step "Formatting"

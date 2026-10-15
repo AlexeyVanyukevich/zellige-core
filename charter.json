@@ -1,5 +1,5 @@
 {
   "workspaces": {
-    ".": ["frontend", "typescript", "playwright"]
+    ".": ["frontend", "typescript", "playwright", "html"]
   }
 }
