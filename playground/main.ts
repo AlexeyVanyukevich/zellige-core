@@ -26,6 +26,21 @@ function element<K extends keyof HTMLElementTagNameMap>(
   return Object.assign(document.createElement(tag), props)
 }
 
+// The one piece of behaviour a hand-written page brings to a dialog: initial focus on the frame,
+// by `autofocus`, then `showModal()`. Escape and the return of focus are the platform's.
+function opener(dialog: HTMLDialogElement, example: string): HTMLButtonElement {
+  const button = element('button', {
+    type: 'button',
+    className: 'ui-button',
+    textContent: `Open ${example}`,
+  })
+  button.addEventListener('click', () => {
+    dialog.querySelector('.ui-dialog__frame')?.setAttribute('autofocus', '')
+    dialog.showModal()
+  })
+  return button
+}
+
 function component(path: string, source: string): HTMLElement {
   const name = path.slice(path.lastIndexOf('/') + 1, -'.html'.length)
   const heading = element('h2', {
@@ -41,13 +56,16 @@ function component(path: string, source: string): HTMLElement {
   // out of it, so the loop walks a copy.
   const template = element('template', { innerHTML: source })
   let example: HTMLElement | undefined
+  let caption = ''
   for (const node of Array.from(template.content.childNodes)) {
     const title = node.nodeType === Node.COMMENT_NODE ? marker.exec(node.textContent ?? '') : null
     if (title?.[1]) {
+      caption = title[1].replaceAll('-', ' ')
       example = element('div', { className: 'playground__example' })
-      example.append(element('h3', { textContent: title[1].replaceAll('-', ' ') }))
+      example.append(element('h3', { textContent: caption }))
       section.append(example)
     } else if (example) {
+      if (node instanceof HTMLDialogElement) example.append(opener(node, caption))
       example.append(node)
     }
   }

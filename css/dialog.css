@@ -1,0 +1,115 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  /* The dialog is only a box for its frame: no padding, border or background of its own, so a
+     click whose target is the <dialog> itself landed on the backdrop. */
+  .ui-dialog {
+    inline-size: min(32rem, 100vw - 2 * var(--ui-space-4));
+    max-inline-size: none;
+    max-block-size: none;
+    margin: auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ui-ink);
+    overflow: visible;
+  }
+
+  .ui-dialog::backdrop {
+    background: rgb(0 0 0 / 0.45);
+  }
+
+  /* Capped at the viewport: the body scrolls between a fixed head and foot, so a long form
+     never pushes its own controls out of view. */
+  .ui-dialog__frame {
+    display: flex;
+    flex-direction: column;
+    max-block-size: calc(100dvh - 2 * var(--ui-space-4));
+    border: 1px solid var(--ui-line);
+    border-radius: var(--ui-radius);
+    background: var(--ui-surface);
+    box-shadow: var(--ui-shadow-lift);
+  }
+
+  .ui-dialog__head {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ui-space-3);
+    padding: var(--ui-space-3) var(--ui-space-3) var(--ui-space-3) var(--ui-space-4);
+    border-block-end: 1px solid var(--ui-line);
+  }
+
+  .ui-dialog__title {
+    margin: 0;
+    font-size: calc(var(--ui-text) * 1.2);
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .ui-dialog__close {
+    flex: none;
+    inline-size: var(--ui-tap);
+    block-size: var(--ui-tap);
+    border: 0;
+    border-radius: var(--ui-radius-sm);
+    background: transparent;
+    color: var(--ui-ink-soft);
+    font: inherit;
+    cursor: pointer;
+    transition: background-color var(--ui-duration);
+  }
+
+  .ui-dialog__close:hover {
+    background: var(--ui-surface-sunk);
+  }
+
+  /* Rows keep their own height when the body is taller than its content, as in a side dialog. */
+  .ui-dialog__body {
+    display: grid;
+    align-content: start;
+    flex: 1 1 auto;
+    gap: var(--ui-space-4);
+    min-block-size: 0;
+    padding: var(--ui-space-4);
+    overflow-y: auto;
+  }
+
+  .ui-dialog__body > :first-child {
+    margin-block-start: 0;
+  }
+
+  .ui-dialog__body > :last-child {
+    margin-block-end: 0;
+  }
+
+  .ui-dialog__foot {
+    display: flex;
+    flex: none;
+    justify-content: flex-end;
+    gap: var(--ui-space-2);
+    padding: var(--ui-space-3) var(--ui-space-4);
+    border-block-start: 1px solid var(--ui-line);
+  }
+
+  /* Full height at the right edge. */
+  .ui-dialog--side {
+    inline-size: min(32rem, 100vw);
+    block-size: 100dvh;
+    margin: 0 0 0 auto;
+  }
+
+  .ui-dialog--side .ui-dialog__frame {
+    block-size: 100%;
+    max-block-size: 100dvh;
+    border-block: 0;
+    border-inline-end: 0;
+    border-radius: 0;
+  }
+
+  /* The page behind a modal dialog does not scroll. */
+  html:has(.ui-dialog:modal) {
+    overflow: hidden;
+  }
+}
