@@ -166,7 +166,7 @@ both application themes to it.
 | `surface-raised` | `#ffffff`          | `#22262c`    | Hovered or lifted surfaces |
 | `ink`            | `#15181d`          | `#e7e9ec`    | Body text                  |
 | `ink-soft`       | `#4a515c`          | `#a9b0ba`    | Secondary text, labels     |
-| `ink-faint`      | `#6b7380`          | `#858d98`    | Hints, placeholders        |
+| `ink-faint`      | `#646c79`          | `#858d98`    | Hints, placeholders        |
 | `line`           | `#dde1e6`          | `#2d3239`    | Borders, dividers          |
 | `line-strong`    | `#b8bfc8`          | `#444b54`    | Control borders            |
 | `accent`         | `#2f5fd0`          | `#7ea6ff`    | Primary action, selection  |
