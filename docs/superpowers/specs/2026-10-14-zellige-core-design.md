@@ -339,15 +339,18 @@ Behaviour from the platform: `<dialog>` and `showModal()`.
 ```html
 <dialog class="ui-dialog" aria-labelledby="d1-title">
   <div class="ui-dialog__frame" tabindex="-1">
-    <header class="ui-dialog__head">
+    <div class="ui-dialog__head">
       <h2 class="ui-dialog__title" id="d1-title">New booking</h2>
       <button type="button" class="ui-dialog__close" aria-label="Close">✕</button>
-    </header>
+    </div>
     <div class="ui-dialog__body">…</div>
-    <footer class="ui-dialog__foot">…</footer>
+    <div class="ui-dialog__foot">…</div>
   </div>
 </dialog>
 ```
+
+- **The head and the foot are `div`s.** A `header` or `footer` here would be read as the page's
+  banner or content-info landmark; html-validate's `unique-landmark` reports it.
 
 - **Placement**: centred by default, on a phone as well as a desktop. `--side` is full height
   at the right edge, `min(32rem, 100vw)` wide.
