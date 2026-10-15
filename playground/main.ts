@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
-import '../tokens.css'
-import '../ui.css'
+import '@zellige/core/tokens.css'
+import '@zellige/core/ui.css'
 // The booking admin's font, which its theme names. Loaded for every theme; only that one uses it.
 import '@fontsource-variable/golos-text'
 import { THEMES, type Theme } from './themes'

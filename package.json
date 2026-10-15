@@ -5,6 +5,18 @@
   "license": "UNLICENSED",
   "private": true,
   "type": "module",
+  "exports": {
+    "./tokens.css": "./tokens.css",
+    "./ui.css": "./ui.css",
+    "./css/*": "./css/*",
+    "./contract/*": "./contract/*"
+  },
+  "files": [
+    "tokens.css",
+    "ui.css",
+    "css",
+    "contract"
+  ],
   "engines": {
     "node": ">=24.0.0"
   },

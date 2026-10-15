@@ -8,7 +8,6 @@ const playground = `http://${PLAYGROUND.host}:${PLAYGROUND.port}`
 const browsers = process.env.ZELLIGE_BROWSER_WS
 
 export default defineConfig({
-  testDir: './tests/ui',
   testMatch: '**/*.spec.ts',
   forbidOnly: true,
   // No platform in the name: every baseline is rendered in the Playwright image, whatever the
@@ -21,6 +20,10 @@ export default defineConfig({
     trace: 'retain-on-failure',
     ...(browsers ? { connectOptions: { wsEndpoint: browsers, exposeNetwork: '<loopback>' } } : {}),
   },
-  projects: [{ name: 'ui', use: { ...devices['Desktop Chrome'] } }],
+  projects: [
+    { name: 'ui', testDir: './tests/ui', use: { ...devices['Desktop Chrome'] } },
+    // The package as npm would ship it; no page, so no browser is opened.
+    { name: 'package', testDir: './tests/integration' },
+  ],
   webServer: { command: 'npx vite', url: playground, reuseExistingServer: true },
 })
