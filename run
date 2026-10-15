@@ -62,8 +62,6 @@ scenario_dev() {
   npx vite
 }
 
-# `contract/` joins the markup checks with its first file: both tools fail on a directory that
-# is not there.
 scenario_check() {
   prepare
   step "Formatting"
@@ -73,8 +71,8 @@ scenario_check() {
   step "Lint"
   npx oxlint --deny-warnings
   step "Markup"
-  npx html-validate playground
-  npx --no charter scan playground
+  npx html-validate contract playground
+  npx --no charter scan contract playground
   browser_suite
   ok "All checks passed"
 }

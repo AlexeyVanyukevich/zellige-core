@@ -1,0 +1,91 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .ui-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ui-space-2);
+    min-height: var(--ui-tap);
+    padding: 0 var(--ui-space-4);
+    border: 1px solid var(--ui-line-strong);
+    border-radius: var(--ui-radius-sm);
+    background: var(--ui-surface);
+    color: var(--ui-ink);
+    font: inherit;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color var(--ui-duration),
+      border-color var(--ui-duration),
+      color var(--ui-duration);
+  }
+
+  .ui-button:hover:not(:disabled) {
+    background: var(--ui-surface-sunk);
+  }
+
+  .ui-button--primary {
+    border-color: var(--ui-accent);
+    background: var(--ui-accent);
+    color: var(--ui-on-accent);
+  }
+
+  .ui-button--primary:hover:not(:disabled) {
+    border-color: var(--ui-accent-strong);
+    background: var(--ui-accent-strong);
+  }
+
+  .ui-button--quiet {
+    border-color: transparent;
+    background: transparent;
+    color: var(--ui-accent);
+  }
+
+  .ui-button--quiet:hover:not(:disabled) {
+    background: var(--ui-accent-soft);
+  }
+
+  .ui-button--danger {
+    border-color: var(--ui-danger);
+    color: var(--ui-danger);
+  }
+
+  .ui-button--danger:hover:not(:disabled) {
+    background: var(--ui-danger-soft);
+  }
+
+  .ui-button:disabled {
+    opacity: 0.55;
+    cursor: default;
+  }
+
+  /* Busy stays focusable and keeps its label; the spinner is what shows it. */
+  .ui-button[aria-busy='true'] {
+    cursor: progress;
+  }
+
+  .ui-button[aria-busy='true']::before {
+    content: '';
+    inline-size: 1em;
+    block-size: 1em;
+    border: 2px solid currentColor;
+    border-inline-end-color: transparent;
+    border-radius: 50%;
+    animation: ui-button-spin 0.8s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ui-button[aria-busy='true']::before {
+      animation: none;
+    }
+  }
+
+  @keyframes ui-button-spin {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+}

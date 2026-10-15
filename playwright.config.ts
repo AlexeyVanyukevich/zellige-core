@@ -11,6 +11,9 @@ export default defineConfig({
   testDir: './tests/ui',
   testMatch: '**/*.spec.ts',
   forbidOnly: true,
+  // No platform in the name: every baseline is rendered in the Playwright image, whatever the
+  // host the runner is on.
+  snapshotPathTemplate: '{testDir}/__screenshots__/{arg}{ext}',
   retries: 0,
   reporter: [['list']],
   use: {
