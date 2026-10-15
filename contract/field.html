@@ -1,0 +1,64 @@
+<!-- example: input -->
+<input class="ui-input" type="search" aria-label="Search" />
+
+<!-- example: select -->
+<select class="ui-select" aria-label="House">
+  <option>North cabin</option>
+  <option>South cabin</option>
+</select>
+
+<!-- example: textarea -->
+<textarea class="ui-textarea" aria-label="Note"></textarea>
+
+<!-- example: field-with-hint -->
+<div class="ui-field">
+  <label class="ui-field__label" for="field-hint">Name</label>
+  <input class="ui-input" id="field-hint" aria-describedby="field-hint-hint" />
+  <p class="ui-field__hint" id="field-hint-hint">As on the passport</p>
+</div>
+
+<!-- example: field-with-error -->
+<div class="ui-field">
+  <label class="ui-field__label" for="field-error">Name</label>
+  <input
+    class="ui-input"
+    id="field-error"
+    aria-describedby="field-error-error"
+    aria-invalid="true"
+  />
+  <p class="ui-field__error" id="field-error-error">Enter a name</p>
+</div>
+
+<!-- example: field-with-hint-and-error -->
+<div class="ui-field">
+  <label class="ui-field__label" for="field-both">Name</label>
+  <input
+    class="ui-input"
+    id="field-both"
+    aria-describedby="field-both-hint field-both-error"
+    aria-invalid="true"
+  />
+  <p class="ui-field__hint" id="field-both-hint">As on the passport</p>
+  <p class="ui-field__error" id="field-both-error">Enter a name</p>
+</div>
+
+<!-- example: field-with-select -->
+<div class="ui-field">
+  <label class="ui-field__label" for="field-select">House</label>
+  <select class="ui-select" id="field-select">
+    <option>North cabin</option>
+    <option>South cabin</option>
+  </select>
+</div>
+
+<!-- example: field-with-textarea -->
+<div class="ui-field">
+  <label class="ui-field__label" for="field-textarea">Note</label>
+  <textarea class="ui-textarea" id="field-textarea"></textarea>
+</div>
+
+<!-- example: disabled -->
+<div class="ui-field">
+  <label class="ui-field__label" for="field-disabled">Arrival</label>
+  <input class="ui-input" id="field-disabled" value="12 October" disabled />
+</div>
