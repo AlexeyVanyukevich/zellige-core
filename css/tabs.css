@@ -1,0 +1,53 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  /* Markup only: the keyboard model and the selection come from a binding's primitive library,
+     which sets the attributes these rules select on. */
+  .ui-tabs {
+    display: grid;
+  }
+
+  .ui-tabs__list {
+    display: flex;
+    gap: var(--ui-space-1);
+    border-block-end: 1px solid var(--ui-line);
+  }
+
+  .ui-tabs__tab {
+    min-block-size: var(--ui-tap);
+    margin-block-end: -1px;
+    padding: 0 var(--ui-space-3);
+    border: 0;
+    border-block-end: 2px solid transparent;
+    background: transparent;
+    color: var(--ui-ink-soft);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      color var(--ui-duration),
+      border-color var(--ui-duration);
+  }
+
+  .ui-tabs__tab:hover {
+    color: var(--ui-ink);
+  }
+
+  /* Selection is the underline and the ink together, never the colour alone. */
+  .ui-tabs__tab[aria-selected='true'] {
+    border-block-end-color: var(--ui-accent);
+    color: var(--ui-ink);
+  }
+
+  .ui-tabs__panel {
+    padding-block: var(--ui-space-4);
+  }
+
+  .ui-tabs__panel > :first-child {
+    margin-block-start: 0;
+  }
+
+  .ui-tabs__panel > :last-child {
+    margin-block-end: 0;
+  }
+}

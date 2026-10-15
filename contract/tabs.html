@@ -1,0 +1,73 @@
+<!-- example: text-panel -->
+<div class="ui-tabs">
+  <div class="ui-tabs__list" role="tablist" aria-label="Card" aria-orientation="horizontal">
+    <button
+      type="button"
+      class="ui-tabs__tab"
+      role="tab"
+      id="tabs-text-tab-spec"
+      aria-controls="tabs-text-panel-spec"
+      aria-selected="true"
+      tabindex="0"
+    >
+      Spec
+    </button>
+    <button
+      type="button"
+      class="ui-tabs__tab"
+      role="tab"
+      id="tabs-text-tab-plan"
+      aria-selected="false"
+      tabindex="-1"
+    >
+      Plan
+    </button>
+  </div>
+  <div
+    class="ui-tabs__panel"
+    role="tabpanel"
+    id="tabs-text-panel-spec"
+    aria-labelledby="tabs-text-tab-spec"
+    tabindex="0"
+  >
+    <p>The design, written and approved before any code.</p>
+  </div>
+</div>
+
+<!-- example: panel-with-control -->
+<div class="ui-tabs">
+  <div class="ui-tabs__list" role="tablist" aria-label="Booking" aria-orientation="horizontal">
+    <button
+      type="button"
+      class="ui-tabs__tab"
+      role="tab"
+      id="tabs-control-tab-guest"
+      aria-controls="tabs-control-panel-guest"
+      aria-selected="true"
+      tabindex="0"
+    >
+      Guest
+    </button>
+    <button
+      type="button"
+      class="ui-tabs__tab"
+      role="tab"
+      id="tabs-control-tab-payment"
+      aria-selected="false"
+      tabindex="-1"
+    >
+      Payment
+    </button>
+  </div>
+  <div
+    class="ui-tabs__panel"
+    role="tabpanel"
+    id="tabs-control-panel-guest"
+    aria-labelledby="tabs-control-tab-guest"
+  >
+    <div class="ui-field">
+      <label class="ui-field__label" for="tabs-control-guest">Name</label>
+      <input class="ui-input" id="tabs-control-guest" />
+    </div>
+  </div>
+</div>

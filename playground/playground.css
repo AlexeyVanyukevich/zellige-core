@@ -34,7 +34,7 @@ body {
   margin-block-end: 16px;
 }
 
-.playground__example > .ui-field {
+.playground__example > :is(.ui-field, .ui-tabs) {
   justify-self: stretch;
 }
 
