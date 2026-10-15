@@ -1,0 +1,55 @@
+/*
+ * The role tokens every component reads. An application themes the kit by setting these from
+ * its own CSS, unlayered, so its values win over the defaults below.
+ */
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.tokens {
+  :root {
+    color-scheme: light dark;
+
+    --ui-bg: light-dark(#f6f7f8, #121418);
+    --ui-surface: light-dark(#ffffff, #1a1d22);
+    --ui-surface-sunk: light-dark(#eef0f2, #15171b);
+    --ui-surface-raised: light-dark(#ffffff, #22262c);
+    --ui-ink: light-dark(#15181d, #e7e9ec);
+    --ui-ink-soft: light-dark(#4a515c, #a9b0ba);
+    --ui-ink-faint: light-dark(#6b7380, #858d98);
+    --ui-line: light-dark(#dde1e6, #2d3239);
+    --ui-line-strong: light-dark(#b8bfc8, #444b54);
+    --ui-accent: light-dark(#2f5fd0, #7ea6ff);
+    --ui-accent-strong: light-dark(#234aa6, #a5c1ff);
+    --ui-accent-soft: light-dark(#e3eafb, #1f2b45);
+    --ui-on-accent: light-dark(#ffffff, #0d1525);
+    --ui-focus: var(--ui-accent);
+    --ui-success: light-dark(#1f7a4d, #6fcf97);
+    --ui-success-soft: light-dark(#dcf1e6, #17321f);
+    --ui-warning: light-dark(#9a6200, #e5b45a);
+    --ui-warning-soft: light-dark(#fbeccc, #3a2c10);
+    --ui-danger: light-dark(#b93b33, #f07a70);
+    --ui-danger-soft: light-dark(#f8dfdc, #3d1d1b);
+
+    --ui-font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --ui-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+    --ui-text: 15px;
+    --ui-text-sm: 13px;
+    --ui-leading: 1.5;
+    --ui-radius: 10px;
+    --ui-radius-sm: 6px;
+    --ui-tap: 40px;
+    --ui-space-1: 4px;
+    --ui-space-2: 8px;
+    --ui-space-3: 12px;
+    --ui-space-4: 16px;
+    --ui-space-5: 24px;
+    --ui-shadow-low: 0 1px 2px rgb(0 0 0 / 0.08);
+    --ui-shadow-lift: 0 6px 20px rgb(0 0 0 / 0.14);
+    --ui-duration: 150ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --ui-duration: 0ms;
+    }
+  }
+}

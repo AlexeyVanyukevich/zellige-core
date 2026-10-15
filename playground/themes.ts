@@ -12,4 +12,13 @@ export interface Theme {
 export const THEMES: readonly Theme[] = [
   { name: 'kit-light', label: 'Kit, light', colorScheme: 'light' },
   { name: 'kit-dark', label: 'Kit, dark', colorScheme: 'dark' },
+  { name: 'console', label: 'Console', colorScheme: 'dark', stylesheet: 'console' },
+  // The booking admin's palette has both schemes, so it is checked in each.
+  {
+    name: 'bookings-light',
+    label: 'Bookings, light',
+    colorScheme: 'light',
+    stylesheet: 'bookings',
+  },
+  { name: 'bookings-dark', label: 'Bookings, dark', colorScheme: 'dark', stylesheet: 'bookings' },
 ]

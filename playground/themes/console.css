@@ -1,0 +1,21 @@
+/*
+ * The console's theme: its palette mapped onto the kit's roles, as the console's own theme file
+ * will do it. The values are copied from the `:root` of the console's `web/src/styles.css`, at
+ * its commit 39e7f35 (2026-10-02). A role the console has no colour for keeps the kit's dark
+ * default.
+ */
+:root {
+  color-scheme: dark;
+
+  --ui-bg: #14161a;
+  --ui-surface: #1c1f25;
+  --ui-surface-raised: #23272e;
+  --ui-line: #2f343d;
+  --ui-ink: #e6e8ec;
+  --ui-ink-soft: #9aa3b0;
+  --ui-accent: #6ea8fe;
+  /* Open and resolved incidents: the console's two status colours. */
+  --ui-danger: #f07171;
+  --ui-success: #6fcf97;
+  --ui-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+}
