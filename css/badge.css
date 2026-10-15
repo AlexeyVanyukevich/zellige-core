@@ -1,0 +1,39 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  /* The text carries the meaning, in the body ink: a tone on its own tint does not reach AA in
+     every theme. The tint and the border repeat the tone. */
+  .ui-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 var(--ui-space-2);
+    border: 1px solid var(--ui-line-strong);
+    border-radius: 999px;
+    background: var(--ui-surface-sunk);
+    color: var(--ui-ink);
+    font-size: var(--ui-text-sm);
+    font-weight: 600;
+    line-height: 1.6;
+    white-space: nowrap;
+  }
+
+  .ui-badge--accent {
+    border-color: var(--ui-accent);
+    background: var(--ui-accent-soft);
+  }
+
+  .ui-badge--success {
+    border-color: var(--ui-success);
+    background: var(--ui-success-soft);
+  }
+
+  .ui-badge--warning {
+    border-color: var(--ui-warning);
+    background: var(--ui-warning-soft);
+  }
+
+  .ui-badge--danger {
+    border-color: var(--ui-danger);
+    background: var(--ui-danger-soft);
+  }
+}
