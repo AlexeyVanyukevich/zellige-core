@@ -10,7 +10,7 @@
   },
   "prettier": "charter/stacks/typescript/prettier",
   "devDependencies": {
-    "charter": "github:AlexeyVanyukevich/charter#v3.1.0",
+    "charter": "github:AlexeyVanyukevich/charter#v3.3.0",
     "oxlint": "^1.88.0",
     "oxlint-tsgolint": "^7.0.2004",
     "prettier": "^3.9.10",
