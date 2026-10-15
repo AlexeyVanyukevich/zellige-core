@@ -11,7 +11,7 @@ for (const theme of THEMES) {
   for (const { component } of CONTRACT) {
     test(`${component} in the ${theme.label} theme`, async ({ page }) => {
       await page.emulateMedia({ reducedMotion: 'reduce' })
-      await openPlayground(page, theme)
+      await openPlayground(page, theme, component)
 
       const section = page.getByRole('region', { name: new RegExp(`^${component}$`, 'i') })
       await expect(section).toHaveScreenshot(`${component}-${theme.name}.png`)

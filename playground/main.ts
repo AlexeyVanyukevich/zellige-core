@@ -82,7 +82,10 @@ select.addEventListener('change', () => {
   history.replaceState(null, '', url)
 })
 
+// `?component=<name>` shows one component alone, so its screenshot does not move when another
+// component is added above it.
+const only = new URLSearchParams(location.search).get('component')
 for (const [path, source] of Object.entries(contract).sort(([a], [b]) => a.localeCompare(b))) {
-  main.append(component(path, source))
+  if (!only || path.endsWith(`/${only}.html`)) main.append(component(path, source))
 }
 document.documentElement.dataset.ready = 'true'
