@@ -1,0 +1,68 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  /* Empty and Trouble stand in for content that is not there: centred in the space it would
+     take, with the title in the body ink and the explanation softer. */
+  .ui-empty,
+  .ui-trouble {
+    display: grid;
+    gap: var(--ui-space-2);
+    justify-items: center;
+    padding: var(--ui-space-5) var(--ui-space-4);
+    text-align: center;
+  }
+
+  .ui-empty__title,
+  .ui-trouble__title {
+    margin: 0;
+    color: var(--ui-ink);
+    font-weight: 600;
+  }
+
+  .ui-empty__body,
+  .ui-trouble__detail {
+    margin: 0;
+    color: var(--ui-ink-soft);
+  }
+
+  .ui-empty__body > :first-child {
+    margin-block-start: 0;
+  }
+
+  .ui-empty__body > :last-child {
+    margin-block-end: 0;
+  }
+
+  .ui-trouble > .ui-button {
+    margin-block-start: var(--ui-space-2);
+  }
+
+  .ui-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ui-space-2);
+    color: var(--ui-ink-soft);
+  }
+
+  .ui-loading__spinner {
+    inline-size: 1.25em;
+    block-size: 1.25em;
+    border: 2px solid var(--ui-line-strong);
+    border-block-start-color: var(--ui-accent);
+    border-radius: 50%;
+    animation: ui-loading-spin 0.8s linear infinite;
+  }
+
+  /* Without motion the ring stands still; the text says what is happening. */
+  @media (prefers-reduced-motion: reduce) {
+    .ui-loading__spinner {
+      animation: none;
+    }
+  }
+
+  @keyframes ui-loading-spin {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+}

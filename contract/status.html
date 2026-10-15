@@ -1,0 +1,24 @@
+<!-- example: empty -->
+<div class="ui-empty">
+  <p class="ui-empty__title">No open issues</p>
+  <div class="ui-empty__body"><p>New issues appear here as they arrive.</p></div>
+</div>
+
+<!-- example: loading -->
+<div class="ui-loading" role="status">
+  <span class="ui-loading__spinner" aria-hidden="true"></span>
+  <span class="ui-loading__text">Loading…</span>
+</div>
+
+<!-- example: trouble -->
+<div class="ui-trouble" role="alert">
+  <p class="ui-trouble__title">Couldn't load the issues</p>
+  <p class="ui-trouble__detail">The server did not answer. Check the connection and try again.</p>
+  <button type="button" class="ui-button">Retry</button>
+</div>
+
+<!-- example: trouble-without-retry -->
+<div class="ui-trouble" role="alert">
+  <p class="ui-trouble__title">This board was deleted</p>
+  <p class="ui-trouble__detail">Ask its owner to restore it from the archive.</p>
+</div>
