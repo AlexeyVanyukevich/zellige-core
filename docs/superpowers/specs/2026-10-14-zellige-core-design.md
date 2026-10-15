@@ -1,6 +1,6 @@
 # zellige core — design
 
-Status: **approved**, 2026-10-14. Not built. Replaces the design of
+Status: **built**, 2026-10-16. Replaces the design of
 2026-10-12, which was approved under the working name `ui-kit` as one package and never built;
 §12 lists what changed.
 

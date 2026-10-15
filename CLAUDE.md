@@ -7,7 +7,6 @@ each component's reference HTML in `contract/`, which every binding renders exac
 JavaScript. The React binding, `@zellige/react`, is its own repository and reads `contract/`
 from this package to prove it matches.
 
-Not built yet: the design is `docs/superpowers/specs/2026-10-14-zellige-core-design.md`, and
-`docs/architecture.md` takes over when the first slice ships.
+`docs/architecture.md` is what the kit does today; read it before changing anything.
 
 `./run check` is the verification command. Start sessions at the repository root.
