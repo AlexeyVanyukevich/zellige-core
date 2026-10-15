@@ -52,7 +52,9 @@ There is no backlog yet. Task 12 creates `docs/backlog.md`.
   - `test` checks for Docker, starts the run-server container with a trap that stops it,
     waits for the port, then runs `npx playwright test "$@"`.
   - `dev` serves the playground.
-  - `check` adds `tsc`, `oxlint --deny-warnings` and `test`.
+  - `check` adds `tsc`, `oxlint --deny-warnings`, `html-validate` and `charter scan` over
+    `contract/` and `playground/`, and `test`. Each of those fails on finding no input, which
+    is why none joins before the first `.ts` and `.html` files do.
 - `playground/themes.ts` holds `THEMES`, which the playground and the tests share. It starts
   with `kit-light` and `kit-dark`, which set `color-scheme` on the root.
 - `playground/index.html` and `playground/main.ts` are built to the spec, §7:
@@ -119,8 +121,9 @@ Notes for particular components:
   - The playground adds an "Open <example>" button for each dialog example. Its script sets
     `autofocus` on the frame and calls `showModal()`.
   - `dialog.spec.ts` has one row per dialog example and uses the keyboard only. Opening moves
-    focus to the frame. A mouse wheel over the backdrop leaves `scrollY` unchanged. Escape
-    closes the dialog, and focus returns to the opener.
+    focus to the frame. Tab visits the close button, then the body's and the foot's controls,
+    and never focuses an element outside the dialog. A mouse wheel over the backdrop leaves
+    `scrollY` unchanged. Escape closes the dialog, and focus returns to the opener.
   - `scan.spec.ts` and `screenshots.spec.ts` each get a row per dialog example, scanned and
     shot while open.
 - **Tabs** records React Aria 3.53.1's attributes exactly as the spec's §6 gives them, with

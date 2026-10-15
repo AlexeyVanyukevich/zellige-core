@@ -102,9 +102,10 @@ is unchanged: `"@zellige/core": "github:AlexeyVanyukevich/zellige-core#v0.1.0"`.
 
 ## 4. The package
 
-Set up with charter 3.1 as one root workspace taking `frontend typescript playwright`: the
-`frontend` rules for the CSS, TypeScript and Playwright for the browser tests. It has no React
-and no Vitest, so neither stack is loaded.
+Set up with charter 3.3 as one root workspace taking `frontend typescript playwright html`:
+the `frontend` rules for the CSS and the markup, TypeScript and Playwright for the browser
+tests, `html` to check the hand-written HTML. It has no React and no Vitest, so neither stack
+is loaded.
 
 | Export                                    | Contents                                                          |
 | ----------------------------------------- | ----------------------------------------------------------------- |
@@ -133,8 +134,8 @@ zellige-core/
   tests/ui/
 ```
 
-charter's `frontend` accessibility rule loads on `**/*.css`, so it reaches every stylesheet
-here. It does not load on `contract/*.html` (§11).
+charter's `frontend` accessibility rule loads on `**/*.css` and `**/*.html`, so it reaches
+every stylesheet and every contract file here.
 
 ## 5. Tokens and theming
 
@@ -410,6 +411,63 @@ what React Aria's `useTabList`, `useTab` and `useTabPanel` produce, read from `r
   text-only case.
 - Roving tabindex: only the selected tab is in the tab order.
 
+### Accessibility
+
+What each component promises a keyboard and a screen reader. The page around the components —
+its headings, the order of its regions, its forms — is the application's, and each
+application's slices state it.
+
+**Focus order.** Every control is a native element, focused in source order. No kit markup
+takes a positive `tabindex`. Two components move focus:
+
+- **Dialog.** Opening it moves focus to the frame. The screen reader announces the dialog by
+  its title, and Tab then reaches the close button, the body's controls and the foot's
+  controls, in that order. The dialog is modal, so the page behind it is inert, and Tab
+  reaches nothing there. Closing returns focus to the opener, which the platform does for
+  `showModal()`.
+- **Tabs.** The list is one tab stop, the selected tab. The binding's arrow keys move between
+  tabs, and Tab goes on to the panel, or to the panel's first control.
+
+**Accessible names.**
+
+| Element                             | Name                                                             |
+| ----------------------------------- | ---------------------------------------------------------------- |
+| Button                              | Its text; an icon-only button takes `aria-label` from the caller |
+| Input, Select, Textarea             | The field's `<label for>`, or `aria-label` when used alone       |
+| Dialog                              | Its title, by `aria-labelledby`                                  |
+| Dialog's close button               | `aria-label="Close"`, one of the kit's three strings             |
+| Tab list                            | `aria-label`, from the caller                                    |
+| Tab, tab panel                      | The tab's text; the panel by `aria-labelledby` its tab           |
+| Loading                             | Its text, `Loading…`                                             |
+| Notice, Empty, Trouble, Card, Badge | None: their text is read where it stands                         |
+
+**Heading structure.** The dialog's title is the kit's only heading: an `h2`, since the
+dialog's top-layer content is read as a document of its own. The titles of Notice, Empty and
+Trouble are paragraphs, not headings. The kit cannot know which level they would sit at, and
+a status message is not a section of the page. A card's headings are its content's.
+
+**States, and how each is announced.**
+
+| State        | Markup                                    | Announced                                                    |
+| ------------ | ----------------------------------------- | ------------------------------------------------------------ |
+| Disabled     | `disabled`                                | As unavailable, from the native control                      |
+| Busy button  | `aria-busy="true"`                        | Not reliably; the outcome is announced by a Notice           |
+| Hint         | `aria-describedby`                        | After the control's name, on focus                           |
+| Invalid      | `aria-invalid="true"`, `aria-describedby` | As invalid, then the error's text, on focus                  |
+| Selected tab | `aria-selected="true"`                    | As selected                                                  |
+| Open dialog  | `<dialog>` opened by `showModal()`        | As a dialog, with its title, when focus enters it            |
+| Loading      | `role="status"`                           | Politely, if it is written into a region already on the page |
+| Trouble      | `role="alert"`                            | At once, with the same condition                             |
+| Notice       | `role="status"` or `role="alert"`         | By tone, with the same condition (Notice, above)             |
+| Badge tone   | A modifier class                          | Not at all: the badge's text carries the meaning             |
+
+**What an error does.** A field's error is text inside the field. It is tied to the control by
+`aria-invalid` and `aria-describedby` and drawn in `--ui-danger`, but the text is the error, so
+it is never colour alone. The kit does not move focus or announce an error when it appears.
+What a failed submit does is the application's to state: focus to the first invalid control,
+or a danger Notice that sums up the errors. A failed load is Trouble, announced as an alert,
+with a Retry button the application wires or leaves out.
+
 ## 7. The playground
 
 A static page, served by Vite in development and in the browser tests, and not shipped. A short
@@ -424,7 +482,13 @@ It is a valid page in its own right — one `h1`, headings that skip no level, a
 
 charter's rules apply: tests before implementation, cases in typed datasets, journeys by role
 with an axe scan of every state. `./run check` runs types, formatting, lint
-(`oxlint --deny-warnings`) and the suite.
+(`oxlint --deny-warnings`), the markup checks and the suite.
+
+**Markup**, statically, over every HTML file in `contract/` and `playground/`: `html-validate`
+with charter's `html` config checks the content model, and `charter scan` runs axe-core in
+jsdom under the same five WCAG tags to check ARIA. The config's `charter/clickable-control`
+reports an inline click handler on an element that is not a control. Neither tool can see
+colour contrast, which needs layout; the browser scans below cover it.
 
 All of core's tests are browser tests (`tests/ui/`, Playwright against the playground). Core
 has no pure functions, so it has no unit suite. Elements are found by role and accessible name,
@@ -498,10 +562,6 @@ version of core. Adding one is a minor version.
 
 - That the Tabs contract is what React Aria renders in every state. It was read from the
   3.53.1 source, not rendered; the React binding's contract test is where it is first proved.
-- **No linter reads `contract/*.html`.** charter's `frontend` rule assumes a stack that brings
-  an element-level linter, and core takes none: its markup is checked only by the axe scans.
-  The rule's `paths:` do not match `contract/**` either, so a session editing a contract file
-  does not load it.
 - That a Notice written into after mount is announced by VoiceOver, NVDA and TalkBack alike.
 - That the `@zellige` scope is free on the private registry. On GitHub Packages a scope must be
   the owning account's, which would make the names `@alexeyvanyukevich/zellige-core` and
@@ -516,11 +576,13 @@ version of core. Adding one is a minor version.
 | One package, `ui-kit`, with an optional React section              | `@zellige/core` here, `@zellige/react` in its own repository                                               |
 | `react`, `react-dom` as optional peers of the one package          | Core has no React at all; the binding requires React and React Aria                                        |
 | One playground for components and themes                           | Core's static playground scans and screenshots the contract in four themes; the binding's covers behaviour |
-| dev-kit 2.x sections `common`, `ui`, `testing`                     | charter 3.1: `frontend typescript playwright` here; the binding adds `react` and `vitest`                  |
+| dev-kit 2.x sections `common`, `ui`, `testing`                     | charter 3.3: `frontend typescript playwright html` here; the binding's modules are in its design           |
 | Tabs' keyboard model hand-written in `src/core/next-tab.ts`        | React Aria's hooks, in the binding; core holds only the markup                                             |
 | Every tab carries `aria-controls`; the panel always `tabindex="0"` | Only the selected tab does; the panel only when it holds nothing focusable; `aria-orientation` added       |
 | Axe scan in four themes                                            | Against WCAG 2.2 AA with one `WCAG_TAGS` constant, plus keyboard journeys and a focus-indicator test       |
 | —                                                                  | Notice's announcement limit, Badge's text-first meaning, the layer test, the playground as a valid page    |
+| —                                                                  | Static markup checks: `html-validate` and `charter scan` over `contract/` and `playground/`                |
+| —                                                                  | An accessibility section: focus order, names, headings, states and errors                                  |
 | Applications and theme files named                                 | Referred to by role; `themes/console.css`, `themes/bookings.css`                                           |
 
 Class and token names keep the `ui-` prefix: they name the layer, not the project, and a
