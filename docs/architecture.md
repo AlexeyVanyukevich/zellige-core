@@ -37,7 +37,7 @@ first. `ui.css` does not import `tokens.css`.
 Every kit file — `tokens.css`, `ui.css` and each file in `css/` — opens with the same statement:
 
 ```css
-@layer ui.tokens, ui.base, ui.components;
+@layer zl.tokens, zl.base, zl.components;
 ```
 
 so the order holds whichever file an application loads first. Each file then keeps every rule in
@@ -45,23 +45,23 @@ one layer:
 
 | File                              | Layer           |
 | --------------------------------- | --------------- |
-| `tokens.css`                      | `ui.tokens`     |
-| `css/base.css`, `css/utility.css` | `ui.base`       |
-| every other file in `css/`        | `ui.components` |
+| `tokens.css`                      | `zl.tokens`     |
+| `css/base.css`, `css/utility.css` | `zl.base`       |
+| every other file in `css/`        | `zl.components` |
 
 An application's own CSS is unlayered, so it wins over any kit rule whatever its specificity or
 order. No kit rule uses `!important`, and none sets `outline: none`.
 
 ## Tokens
 
-`tokens.css` is the list: every `--ui-*` role, set on `:root`. Colours are `light-dark()` pairs
-under `color-scheme: light dark`, so the page's scheme picks one. `--ui-duration` is `150ms`, and
+`tokens.css` is the list: every `--zl-*` role, set on `:root`. Colours are `light-dark()` pairs
+under `color-scheme: light dark`, so the page's scheme picks one. `--zl-duration` is `150ms`, and
 `0ms` under `prefers-reduced-motion: reduce`.
 
-The light `--ui-ink-faint` is `#646c79`, not the design's `#6b7380`, which is 4.46:1 on
-`--ui-bg`. The new value is 4.94:1 there and 4.64:1 on `--ui-surface-sunk`.
+The light `--zl-ink-faint` is `#646c79`, not the design's `#6b7380`, which is 4.46:1 on
+`--zl-bg`. The new value is 4.94:1 there and 4.64:1 on `--zl-surface-sunk`.
 
-An application themes the kit by setting `--ui-*` from its own unlayered CSS. A role it leaves
+An application themes the kit by setting `--zl-*` from its own unlayered CSS. A role it leaves
 alone keeps the kit's default for the scheme in force. There are no per-component tokens.
 
 ## The contract
@@ -74,11 +74,11 @@ The files are the documentation of the markup; this section gives their rules, n
   props on these names.
 - **Every `id` in `contract/` is unique across all its files,** prefixed by the component's name
   (`field-hint`, `dialog-side-title`), because the playground puts every file on one page.
-- **Every part has a `ui-` BEM class.** Variants are modifier classes (`.ui-button--danger`).
+- **Every part has a `zl-` BEM class.** Variants are modifier classes (`.zl-button--danger`).
   States are native and ARIA attributes, never classes, and the CSS selects on them:
   `:disabled`, `[aria-invalid='true']`, `[aria-busy='true']`, `[aria-selected='true']`,
   `:modal`.
-- **Text stays in `--ui-ink` in Badge and Notice.** A tone on its own tint is below 4.5:1 in
+- **Text stays in `--zl-ink` in Badge and Notice.** A tone on its own tint is below 4.5:1 in
   the light themes (warning 4.36:1, danger 4.11–4.44:1), so the tint and a border in the tone
   carry it, and the text carries the meaning.
 - **The dialog's head and foot are `div`s.** A `header` or `footer` would be read as a page
@@ -101,7 +101,7 @@ The files are the documentation of the markup; this section gives their rules, n
 
 The dialog's behaviour is the platform's: `showModal()` makes it modal, moves focus into it and
 returns focus to the opener on close, and Escape closes it. The kit adds the scroll lock, in CSS:
-`html:has(.ui-dialog:modal) { overflow: hidden; }`.
+`html:has(.zl-dialog:modal) { overflow: hidden; }`.
 
 ## The playground
 
@@ -120,7 +120,7 @@ shipped.
 - Each dialog example gets an "Open …" button that sets `autofocus` on the frame and calls
   `showModal()` — the one piece of behaviour a hand-written page brings.
 
-`themes/console.css` and `themes/bookings.css` copy the two applications' palettes onto `--ui-*`.
+`themes/console.css` and `themes/bookings.css` copy the two applications' palettes onto `--zl-*`.
 Each names, in its header, the file and commit it was copied from. The booking admin's light and
 dark pairs are written as `light-dark()`; the application itself switches them by media query.
 Its font comes from `@fontsource-variable/golos-text`, a dev dependency only the playground
@@ -149,7 +149,7 @@ browser).
 | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `page.spec.ts`        | The playground has one `h1`, one `main`, no skipped heading level, no repeated `id`; the theme switcher by keyboard                                                         |
 | `scan.spec.ts`        | axe under `WCAG_TAGS` in every theme, and with each dialog example open                                                                                                     |
-| `focus.spec.ts`       | Every element Tab reaches shows a 2px solid outline in `--ui-focus` at a 2px offset, in every theme                                                                         |
+| `focus.spec.ts`       | Every element Tab reaches shows a 2px solid outline in `--zl-focus` at a 2px offset, in every theme                                                                         |
 | `layers.spec.ts`      | Each kit file, loaded alone and unprocessed, opens with the order and keeps every rule in its layer; `ui.css` imports every file in `css/`                                  |
 | `dialog.spec.ts`      | Per dialog example, by keyboard: focus lands on the frame, Tab follows the written order and stays in the dialog, the page does not scroll, Escape closes and focus returns |
 | `screenshots.spec.ts` | Each component alone in every theme, and each dialog example open                                                                                                           |

@@ -36,11 +36,11 @@ Map your own colours onto the kit's roles in unlayered CSS. It wins over every k
 
 ```css
 :root {
-  --ui-bg: var(--paper);
-  --ui-ink: var(--ink);
-  --ui-accent: var(--water);
-  --ui-font: var(--font);
-  --ui-tap: 44px;
+  --zl-bg: var(--paper);
+  --zl-ink: var(--ink);
+  --zl-accent: var(--water);
+  --zl-font: var(--font);
+  --zl-tap: 44px;
 }
 ```
 

@@ -10,7 +10,7 @@ export interface KnownFailure {
 export const KNOWN: readonly KnownFailure[] = [
   {
     theme: 'bookings-light',
-    selector: '.ui-field__hint',
+    selector: '.zl-field__hint',
     backlog: "The booking admin's faint ink fails AA as text",
   },
 ]

@@ -1,7 +1,7 @@
 /* Repeated in every kit file, so the order holds whichever file an application loads first. */
-@layer ui.tokens, ui.base, ui.components;
+@layer zl.tokens, zl.base, zl.components;
 
-@layer ui.base {
+@layer zl.base {
   *,
   *::before,
   *::after {
@@ -9,16 +9,16 @@
   }
 
   body {
-    background: var(--ui-bg);
-    color: var(--ui-ink);
-    font-family: var(--ui-font);
-    font-size: var(--ui-text);
-    line-height: var(--ui-leading);
+    background: var(--zl-bg);
+    color: var(--zl-ink);
+    font-family: var(--zl-font);
+    font-size: var(--zl-text);
+    line-height: var(--zl-leading);
   }
 
   /* No kit rule sets `outline: none`: this is the one indicator, on everything focusable. */
   :focus-visible {
-    outline: 2px solid var(--ui-focus);
+    outline: 2px solid var(--zl-focus);
     outline-offset: 2px;
   }
 }

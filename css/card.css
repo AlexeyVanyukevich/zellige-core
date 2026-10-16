@@ -1,21 +1,21 @@
-@layer ui.tokens, ui.base, ui.components;
+@layer zl.tokens, zl.base, zl.components;
 
-@layer ui.components {
-  .ui-card {
-    padding: var(--ui-space-4);
-    border: 1px solid var(--ui-line);
-    border-radius: var(--ui-radius);
-    background: var(--ui-surface);
-    box-shadow: var(--ui-shadow-low);
+@layer zl.components {
+  .zl-card {
+    padding: var(--zl-space-4);
+    border: 1px solid var(--zl-line);
+    border-radius: var(--zl-radius);
+    background: var(--zl-surface);
+    box-shadow: var(--zl-shadow-low);
   }
 
   /* The card's own padding is its spacing: its content's first and last margins collapse into
      nothing rather than doubling it. */
-  .ui-card > :first-child {
+  .zl-card > :first-child {
     margin-block-start: 0;
   }
 
-  .ui-card > :last-child {
+  .zl-card > :last-child {
     margin-block-end: 0;
   }
 }

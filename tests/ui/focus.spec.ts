@@ -25,10 +25,10 @@ for (const theme of THEMES) {
         if (!element || element === document.body || !element.matches(':focus-visible')) {
           return null
         }
-        // `--ui-focus` resolved to a colour the way the outline resolves it: through a probe
+        // `--zl-focus` resolved to a colour the way the outline resolves it: through a probe
         // in the same place, since the token itself is only text until something uses it.
         const probe = document.createElement('span')
-        probe.style.color = 'var(--ui-focus)'
+        probe.style.color = 'var(--zl-focus)'
         element.parentElement?.append(probe)
         const focus = getComputedStyle(probe).color
         probe.remove()

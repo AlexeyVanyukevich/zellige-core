@@ -3,7 +3,7 @@ import { join } from 'node:path'
 import { expect, test, type Page } from '@playwright/test'
 
 const root = join(import.meta.dirname, '../..')
-const ORDER = ['ui.tokens', 'ui.base', 'ui.components']
+const ORDER = ['zl.tokens', 'zl.base', 'zl.components']
 
 // Every stylesheet the package ships, read from the directory, with the layer its rules belong
 // in. A new file in `css/` is a new row, and a component's layer by default.
@@ -16,7 +16,7 @@ const FILES = [
     .map((file) => `css/${file}`),
 ].map((path) => ({
   path,
-  layer: path === 'tokens.css' ? 'ui.tokens' : BASE.has(path) ? 'ui.base' : 'ui.components',
+  layer: path === 'tokens.css' ? 'zl.tokens' : BASE.has(path) ? 'zl.base' : 'zl.components',
 }))
 
 // The files are served as they are written, from an origin of their own, so the CSSOM shows

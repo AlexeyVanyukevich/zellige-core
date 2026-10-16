@@ -1,8 +1,8 @@
-@layer ui.tokens, ui.base, ui.components;
+@layer zl.tokens, zl.base, zl.components;
 
-@layer ui.base {
+@layer zl.base {
   /* Out of sight, still in the accessibility tree. */
-  .ui-visually-hidden {
+  .zl-visually-hidden {
     position: absolute;
     width: 1px;
     height: 1px;

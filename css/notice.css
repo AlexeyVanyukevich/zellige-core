@@ -1,34 +1,34 @@
-@layer ui.tokens, ui.base, ui.components;
+@layer zl.tokens, zl.base, zl.components;
 
-@layer ui.components {
+@layer zl.components {
   /* The text stays in the body ink: a tone on its own tint does not reach AA in every theme.
      The tint and the border carry the tone, and the title carries the meaning. */
-  .ui-notice {
+  .zl-notice {
     display: grid;
-    gap: var(--ui-space-1);
-    padding: var(--ui-space-3) var(--ui-space-4);
-    border: 1px solid var(--ui-accent);
+    gap: var(--zl-space-1);
+    padding: var(--zl-space-3) var(--zl-space-4);
+    border: 1px solid var(--zl-accent);
     border-inline-start-width: 4px;
-    border-radius: var(--ui-radius-sm);
-    background: var(--ui-accent-soft);
-    color: var(--ui-ink);
+    border-radius: var(--zl-radius-sm);
+    background: var(--zl-accent-soft);
+    color: var(--zl-ink);
   }
 
-  .ui-notice--danger {
-    border-color: var(--ui-danger);
-    background: var(--ui-danger-soft);
+  .zl-notice--danger {
+    border-color: var(--zl-danger);
+    background: var(--zl-danger-soft);
   }
 
-  .ui-notice__title {
+  .zl-notice__title {
     margin: 0;
     font-weight: 600;
   }
 
-  .ui-notice__body > :first-child {
+  .zl-notice__body > :first-child {
     margin-block-start: 0;
   }
 
-  .ui-notice__body > :last-child {
+  .zl-notice__body > :last-child {
     margin-block-end: 0;
   }
 }

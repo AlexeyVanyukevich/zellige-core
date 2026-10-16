@@ -7,15 +7,15 @@
 :root {
   color-scheme: dark;
 
-  --ui-bg: #14161a;
-  --ui-surface: #1c1f25;
-  --ui-surface-raised: #23272e;
-  --ui-line: #2f343d;
-  --ui-ink: #e6e8ec;
-  --ui-ink-soft: #9aa3b0;
-  --ui-accent: #6ea8fe;
+  --zl-bg: #14161a;
+  --zl-surface: #1c1f25;
+  --zl-surface-raised: #23272e;
+  --zl-line: #2f343d;
+  --zl-ink: #e6e8ec;
+  --zl-ink-soft: #9aa3b0;
+  --zl-accent: #6ea8fe;
   /* Open and resolved incidents: the console's two status colours. */
-  --ui-danger: #f07171;
-  --ui-success: #6fcf97;
-  --ui-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+  --zl-danger: #f07171;
+  --zl-success: #6fcf97;
+  --zl-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
 }

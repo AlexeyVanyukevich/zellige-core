@@ -1,5 +1,5 @@
 /* The base layer and every component. Load `tokens.css` before it, or set the tokens yourself. */
-@layer ui.tokens, ui.base, ui.components;
+@layer zl.tokens, zl.base, zl.components;
 
 @import './css/base.css';
 @import './css/utility.css';

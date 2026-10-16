@@ -31,11 +31,11 @@ function element<K extends keyof HTMLElementTagNameMap>(
 function opener(dialog: HTMLDialogElement, example: string): HTMLButtonElement {
   const button = element('button', {
     type: 'button',
-    className: 'ui-button',
+    className: 'zl-button',
     textContent: `Open ${example}`,
   })
   button.addEventListener('click', () => {
-    dialog.querySelector('.ui-dialog__frame')?.setAttribute('autofocus', '')
+    dialog.querySelector('.zl-dialog__frame')?.setAttribute('autofocus', '')
     dialog.showModal()
   })
   return button

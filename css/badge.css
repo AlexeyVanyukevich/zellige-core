@@ -1,39 +1,39 @@
-@layer ui.tokens, ui.base, ui.components;
+@layer zl.tokens, zl.base, zl.components;
 
-@layer ui.components {
+@layer zl.components {
   /* The text carries the meaning, in the body ink: a tone on its own tint does not reach AA in
      every theme. The tint and the border repeat the tone. */
-  .ui-badge {
+  .zl-badge {
     display: inline-flex;
     align-items: center;
-    padding: 0 var(--ui-space-2);
-    border: 1px solid var(--ui-line-strong);
+    padding: 0 var(--zl-space-2);
+    border: 1px solid var(--zl-line-strong);
     border-radius: 999px;
-    background: var(--ui-surface-sunk);
-    color: var(--ui-ink);
-    font-size: var(--ui-text-sm);
+    background: var(--zl-surface-sunk);
+    color: var(--zl-ink);
+    font-size: var(--zl-text-sm);
     font-weight: 600;
     line-height: 1.6;
     white-space: nowrap;
   }
 
-  .ui-badge--accent {
-    border-color: var(--ui-accent);
-    background: var(--ui-accent-soft);
+  .zl-badge--accent {
+    border-color: var(--zl-accent);
+    background: var(--zl-accent-soft);
   }
 
-  .ui-badge--success {
-    border-color: var(--ui-success);
-    background: var(--ui-success-soft);
+  .zl-badge--success {
+    border-color: var(--zl-success);
+    background: var(--zl-success-soft);
   }
 
-  .ui-badge--warning {
-    border-color: var(--ui-warning);
-    background: var(--ui-warning-soft);
+  .zl-badge--warning {
+    border-color: var(--zl-warning);
+    background: var(--zl-warning-soft);
   }
 
-  .ui-badge--danger {
-    border-color: var(--ui-danger);
-    background: var(--ui-danger-soft);
+  .zl-badge--danger {
+    border-color: var(--zl-danger);
+    background: var(--zl-danger-soft);
   }
 }

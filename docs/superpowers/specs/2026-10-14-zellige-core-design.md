@@ -144,7 +144,7 @@ every stylesheet and every contract file here.
 `tokens.css` opens with the layer order:
 
 ```css
-@layer ui.tokens, ui.base, ui.components;
+@layer zl.tokens, zl.base, zl.components;
 ```
 
 Every kit file wraps its rules in one of these layers, including a component file imported on
@@ -153,7 +153,7 @@ file order or selector specificity. No `!important` is needed to override the ki
 
 ### Role tokens
 
-Components read only these. All are prefixed `--ui-`. Colours are declared with `light-dark()`
+Components read only these. All are prefixed `--zl-`. Colours are declared with `light-dark()`
 under `color-scheme: light dark`, one declaration per token. Every ink and tone pairing meets
 WCAG 2.2 AA contrast on the surfaces it is used on; the axe scans in §8 hold the defaults and
 both application themes to it.
@@ -173,7 +173,7 @@ both application themes to it.
 | `accent-strong`  | `#234aa6`          | `#a5c1ff`    | Hover and pressed accent   |
 | `accent-soft`    | `#e3eafb`          | `#1f2b45`    | Accent tint behind text    |
 | `on-accent`      | `#ffffff`          | `#0d1525`    | Text on `accent`           |
-| `focus`          | `var(--ui-accent)` | same         | Focus ring                 |
+| `focus`          | `var(--zl-accent)` | same         | Focus ring                 |
 | `success`        | `#1f7a4d`          | `#6fcf97`    | Success tone               |
 | `success-soft`   | `#dcf1e6`          | `#17321f`    | Success tint               |
 | `warning`        | `#9a6200`          | `#e5b45a`    | Warning tone               |
@@ -200,26 +200,26 @@ A theme is the application's own CSS mapping its tokens onto roles:
 ```css
 /* the booking admin */
 :root {
-  --ui-bg: var(--paper);
-  --ui-ink: var(--ink);
-  --ui-accent: var(--water);
-  --ui-accent-strong: var(--water-deep);
-  --ui-accent-soft: var(--water-soft);
-  --ui-danger: var(--alert);
-  --ui-danger-soft: var(--alert-soft);
-  --ui-font: var(--font);
-  --ui-tap: 44px;
+  --zl-bg: var(--paper);
+  --zl-ink: var(--ink);
+  --zl-accent: var(--water);
+  --zl-accent-strong: var(--water-deep);
+  --zl-accent-soft: var(--water-soft);
+  --zl-danger: var(--alert);
+  --zl-danger-soft: var(--alert-soft);
+  --zl-font: var(--font);
+  --zl-tap: 44px;
 }
 ```
 
 - The booking admin's own tokens already switch under `prefers-color-scheme`, so the mapping
   follows them into dark mode. The console sets `color-scheme: dark` and its one palette.
 - **Domain colours stay in the application.** The booking admin's occupied-night colour never
-  becomes a kit token; the console maps its open-incident colour to `--ui-danger` and its
-  resolved colour to `--ui-success`.
-- Any element can re-theme its subtree, for example `.danger-zone { --ui-accent: … }`.
+  becomes a kit token; the console maps its open-incident colour to `--zl-danger` and its
+  resolved colour to `--zl-success`.
+- Any element can re-theme its subtree, for example `.danger-zone { --zl-accent: … }`.
 - **No per-component tokens in v1.** A finer change goes through the part's class. A component
-  token such as `--ui-button-radius` is added only when an application needs one.
+  token such as `--zl-button-radius` is added only when an application needs one.
 
 The playground's `themes/console.css` and `themes/bookings.css` are copies of these two
 mappings with the applications' palettes inlined, so the scans cover them without either
@@ -232,9 +232,9 @@ application installed.
 - **The markup is the API.** Each component's reference HTML lives in `contract/` and shows
   every variant and state. Every binding renders exactly that markup, and so does a
   hand-written page.
-- **Every part has a class**: `ui-` plus BEM, for example `.ui-dialog__head`. These classes are
+- **Every part has a class**: `zl-` plus BEM, for example `.zl-dialog__head`. These classes are
   the override hooks.
-- **Variants are modifier classes**: `.ui-button--danger`, `.ui-dialog--side`.
+- **Variants are modifier classes**: `.zl-button--danger`, `.zl-dialog--side`.
 - **States are native and ARIA attributes, never classes**: `:disabled`, `[aria-invalid]`,
   `[aria-busy]`, `[aria-selected]`, `[open]`. The CSS selects on them, so styling and the
   accessibility tree cannot disagree.
@@ -249,15 +249,15 @@ application installed.
 ### Base layer (`css/base.css`, `css/utility.css`)
 
 - `box-sizing: border-box` on every element and pseudo-element.
-- `body` takes `--ui-bg`, `--ui-ink`, `--ui-font`, `--ui-text` and `--ui-leading`.
-- `:focus-visible` draws a `2px` outline in `--ui-focus` at a `2px` offset. No kit rule sets
+- `body` takes `--zl-bg`, `--zl-ink`, `--zl-font`, `--zl-text` and `--zl-leading`.
+- `:focus-visible` draws a `2px` outline in `--zl-focus` at a `2px` offset. No kit rule sets
   `outline: none`.
-- `.ui-visually-hidden` hides content visually and keeps it for assistive technology.
+- `.zl-visually-hidden` hides content visually and keeps it for assistive technology.
 
 ### Button
 
 ```html
-<button type="button" class="ui-button ui-button--primary">Save</button>
+<button type="button" class="zl-button zl-button--primary">Save</button>
 ```
 
 - Variants: none (neutral), `--primary`, `--quiet`, `--danger`.
@@ -267,15 +267,15 @@ application installed.
 ### Field, Input, Select, Textarea
 
 ```html
-<div class="ui-field">
-  <label class="ui-field__label" for="f1">Name</label>
-  <input class="ui-input" id="f1" aria-describedby="f1-hint f1-error" aria-invalid="true" />
-  <p class="ui-field__hint" id="f1-hint">As on the passport</p>
-  <p class="ui-field__error" id="f1-error">Enter a name</p>
+<div class="zl-field">
+  <label class="zl-field__label" for="f1">Name</label>
+  <input class="zl-input" id="f1" aria-describedby="f1-hint f1-error" aria-invalid="true" />
+  <p class="zl-field__hint" id="f1-hint">As on the passport</p>
+  <p class="zl-field__error" id="f1-error">Enter a name</p>
 </div>
 ```
 
-- The controls are `.ui-input`, `.ui-select` (a native `<select>`) and `.ui-textarea`. Each
+- The controls are `.zl-input`, `.zl-select` (a native `<select>`) and `.zl-textarea`. Each
   works without a field.
 - An error is tied to its control by `aria-invalid` and `aria-describedby`, never shown by
   colour alone.
@@ -283,15 +283,15 @@ application installed.
 ### Card
 
 ```html
-<div class="ui-card">…</div>
+<div class="zl-card">…</div>
 ```
 
 ### Notice
 
 ```html
-<div class="ui-notice ui-notice--danger" role="alert">
-  <p class="ui-notice__title">Payment failed</p>
-  <div class="ui-notice__body">…</div>
+<div class="zl-notice zl-notice--danger" role="alert">
+  <p class="zl-notice__title">Payment failed</p>
+  <div class="zl-notice__body">…</div>
 </div>
 ```
 
@@ -304,20 +304,20 @@ application installed.
 ### Status states — Empty, Loading, Trouble
 
 ```html
-<div class="ui-empty">
-  <p class="ui-empty__title">No open issues</p>
-  <div class="ui-empty__body">…</div>
+<div class="zl-empty">
+  <p class="zl-empty__title">No open issues</p>
+  <div class="zl-empty__body">…</div>
 </div>
 
-<div class="ui-loading" role="status">
-  <span class="ui-loading__spinner" aria-hidden="true"></span>
-  <span class="ui-loading__text">Loading…</span>
+<div class="zl-loading" role="status">
+  <span class="zl-loading__spinner" aria-hidden="true"></span>
+  <span class="zl-loading__text">Loading…</span>
 </div>
 
-<div class="ui-trouble" role="alert">
-  <p class="ui-trouble__title">Couldn't load the issues</p>
-  <p class="ui-trouble__detail">…</p>
-  <button type="button" class="ui-button">Retry</button>
+<div class="zl-trouble" role="alert">
+  <p class="zl-trouble__title">Couldn't load the issues</p>
+  <p class="zl-trouble__detail">…</p>
+  <button type="button" class="zl-button">Retry</button>
 </div>
 ```
 
@@ -326,7 +326,7 @@ The retry button is optional; Trouble without it is a dead end the page explains
 ### Badge
 
 ```html
-<span class="ui-badge ui-badge--success">Resolved</span>
+<span class="zl-badge zl-badge--success">Resolved</span>
 ```
 
 - Tones: none (neutral), `--accent`, `--success`, `--warning`, `--danger`.
@@ -337,14 +337,14 @@ The retry button is optional; Trouble without it is a dead end the page explains
 Behaviour from the platform: `<dialog>` and `showModal()`.
 
 ```html
-<dialog class="ui-dialog" aria-labelledby="d1-title">
-  <div class="ui-dialog__frame" tabindex="-1">
-    <div class="ui-dialog__head">
-      <h2 class="ui-dialog__title" id="d1-title">New booking</h2>
-      <button type="button" class="ui-dialog__close" aria-label="Close">✕</button>
+<dialog class="zl-dialog" aria-labelledby="d1-title">
+  <div class="zl-dialog__frame" tabindex="-1">
+    <div class="zl-dialog__head">
+      <h2 class="zl-dialog__title" id="d1-title">New booking</h2>
+      <button type="button" class="zl-dialog__close" aria-label="Close">✕</button>
     </div>
-    <div class="ui-dialog__body">…</div>
-    <div class="ui-dialog__foot">…</div>
+    <div class="zl-dialog__body">…</div>
+    <div class="zl-dialog__foot">…</div>
   </div>
 </dialog>
 ```
@@ -361,7 +361,7 @@ Behaviour from the platform: `<dialog>` and `showModal()`.
   `<dialog>` itself landed on the backdrop. A binding's backdrop handling relies on this.
 - **Initial focus** belongs on the frame, which is why it takes `tabindex="-1"`. A hand-written
   page adds `autofocus` to it; a binding focuses it after `showModal()`.
-- **Scroll lock**: pure CSS, `html:has(.ui-dialog:modal) { overflow: hidden; }`.
+- **Scroll lock**: pure CSS, `html:has(.zl-dialog:modal) { overflow: hidden; }`.
 - The foot is optional.
 
 ### Tabs
@@ -371,11 +371,11 @@ what React Aria's `useTabList`, `useTab` and `useTabPanel` produce, read from `r
 3.53.1, so the React binding's props land on this markup unchanged.
 
 ```html
-<div class="ui-tabs">
-  <div class="ui-tabs__list" role="tablist" aria-label="Card" aria-orientation="horizontal">
+<div class="zl-tabs">
+  <div class="zl-tabs__list" role="tablist" aria-label="Card" aria-orientation="horizontal">
     <button
       type="button"
-      class="ui-tabs__tab"
+      class="zl-tabs__tab"
       role="tab"
       id="t1-tab-spec"
       aria-controls="t1-panel-spec"
@@ -386,7 +386,7 @@ what React Aria's `useTabList`, `useTab` and `useTabPanel` produce, read from `r
     </button>
     <button
       type="button"
-      class="ui-tabs__tab"
+      class="zl-tabs__tab"
       role="tab"
       id="t1-tab-plan"
       aria-selected="false"
@@ -396,7 +396,7 @@ what React Aria's `useTabList`, `useTab` and `useTabPanel` produce, read from `r
     </button>
   </div>
   <div
-    class="ui-tabs__panel"
+    class="zl-tabs__panel"
     role="tabpanel"
     id="t1-panel-spec"
     aria-labelledby="t1-tab-spec"
@@ -465,7 +465,7 @@ a status message is not a section of the page. A card's headings are its content
 | Badge tone   | A modifier class                          | Not at all: the badge's text carries the meaning             |
 
 **What an error does.** A field's error is text inside the field. It is tied to the control by
-`aria-invalid` and `aria-describedby` and drawn in `--ui-danger`, but the text is the error, so
+`aria-invalid` and `aria-describedby` and drawn in `--zl-danger`, but the text is the error, so
 it is never colour alone. The kit does not move focus or announce an error when it appears.
 What a failed submit does is the application's to state: focus to the first invalid control,
 or a danger Notice that sums up the errors. A failed load is Trouble, announced as an alert,
@@ -504,7 +504,7 @@ never by class.
 - **Screenshots**: each contract file in each theme. Baselines are made in the Playwright
   Docker image matching the installed Playwright version, so they do not depend on the machine.
 - **Layers**, against a dataset of every file in `css/`: loaded alone, each file's rules all
-  sit inside a `ui.*` layer, read through the CSSOM; and `ui.css` imports every file.
+  sit inside a `zl.*` layer, read through the CSSOM; and `ui.css` imports every file.
 - **The platform's dialog**, keyboard only: opening moves focus to the frame, the page does not
   scroll behind it, Escape closes it, and focus returns to the opener.
 - **Focus indicator**: every focusable element in the contract shows the outline under
@@ -536,7 +536,7 @@ Each application's migration gets its own short plan.
 Each migration:
 
 - Its first commit adds both packages, a theme file mapping the application's tokens onto
-  `--ui-*`, and a line in the application's `CLAUDE.md` naming zellige as its component kit,
+  `--zl-*`, and a line in the application's `CLAUDE.md` naming zellige as its component kit,
   which charter's `frontend` rule reads. Nothing changes on screen.
 - After that it replaces one component per commit and deletes the application's CSS for it.
   The application's browser journeys stay green at every commit.
@@ -588,5 +588,7 @@ version of core. Adding one is a minor version.
 | —                                                                  | An accessibility section: focus order, names, headings, states and errors                                  |
 | Applications and theme files named                                 | Referred to by role; `themes/console.css`, `themes/bookings.css`                                           |
 
-Class and token names keep the `ui-` prefix: they name the layer, not the project, and a
-rename would buy nothing.
+Classes, tokens and layers are prefixed `zl-` (`zl.` for layers), not the working name's
+`ui-`. `ui-` is a likely prefix for an application's own classes or another library's, and a
+clash would be silent; `zl-` names the kit, stays short in markup, and was cheapest to adopt
+before the first release.

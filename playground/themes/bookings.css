@@ -10,25 +10,25 @@
 :root {
   color-scheme: light dark;
 
-  --ui-bg: light-dark(#eceeec, #0f1614);
-  --ui-surface: light-dark(#ffffff, #17201e);
-  --ui-surface-sunk: light-dark(#f4f6f4, #121a18);
-  --ui-ink: light-dark(#16211f, #e8edea);
-  --ui-ink-soft: light-dark(#46524f, #a8b4b0);
-  --ui-ink-faint: light-dark(#78847f, #7d8a86);
-  --ui-line: light-dark(#d7dcd8, #2a3532);
-  --ui-line-strong: light-dark(#b9c1bc, #3d4a46);
-  --ui-accent: light-dark(#2e5d63, #7fb3b8);
-  --ui-accent-strong: light-dark(#1d3f44, #a9cfd2);
-  --ui-accent-soft: light-dark(#d6e3e3, #1e2f31);
+  --zl-bg: light-dark(#eceeec, #0f1614);
+  --zl-surface: light-dark(#ffffff, #17201e);
+  --zl-surface-sunk: light-dark(#f4f6f4, #121a18);
+  --zl-ink: light-dark(#16211f, #e8edea);
+  --zl-ink-soft: light-dark(#46524f, #a8b4b0);
+  --zl-ink-faint: light-dark(#78847f, #7d8a86);
+  --zl-line: light-dark(#d7dcd8, #2a3532);
+  --zl-line-strong: light-dark(#b9c1bc, #3d4a46);
+  --zl-accent: light-dark(#2e5d63, #7fb3b8);
+  --zl-accent-strong: light-dark(#1d3f44, #a9cfd2);
+  --zl-accent-soft: light-dark(#d6e3e3, #1e2f31);
   /* The application writes white on its accent in light, and its paper colour in dark. */
-  --ui-on-accent: light-dark(#ffffff, #0f1614);
-  --ui-danger: light-dark(#b6483f, #e8837a);
-  --ui-danger-soft: light-dark(#f6dedc, #3a1f1d);
+  --zl-on-accent: light-dark(#ffffff, #0f1614);
+  --zl-danger: light-dark(#b6483f, #e8837a);
+  --zl-danger-soft: light-dark(#f6dedc, #3a1f1d);
 
-  --ui-font:
+  --zl-font:
     'Golos Text Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --ui-tap: 44px;
-  --ui-shadow-low: 0 1px 2px light-dark(rgb(22 33 31 / 0.07), rgb(0 0 0 / 0.4));
-  --ui-shadow-lift: 0 6px 20px light-dark(rgb(22 33 31 / 0.13), rgb(0 0 0 / 0.5));
+  --zl-tap: 44px;
+  --zl-shadow-low: 0 1px 2px light-dark(rgb(22 33 31 / 0.07), rgb(0 0 0 / 0.4));
+  --zl-shadow-lift: 0 6px 20px light-dark(rgb(22 33 31 / 0.13), rgb(0 0 0 / 0.5));
 }
