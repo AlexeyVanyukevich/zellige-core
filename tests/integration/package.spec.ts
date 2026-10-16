@@ -9,7 +9,7 @@ const root = join(import.meta.dirname, '../..')
 // What the package exists to ship, read from the directories, so a new component is a new row.
 const SHIPPED = [
   'tokens.css',
-  'ui.css',
+  'zl.css',
   ...readdirSync(join(root, 'css')).map((file) => `css/${file}`),
   ...readdirSync(join(root, 'contract')).map((file) => `contract/${file}`),
 ].sort()

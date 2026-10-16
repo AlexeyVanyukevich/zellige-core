@@ -68,10 +68,10 @@ for (const { path, layer } of FILES) {
   })
 }
 
-test('ui.css declares the layer order, then imports every file in css/ and nothing else', async ({
+test('zl.css declares the layer order, then imports every file in css/ and nothing else', async ({
   page,
 }) => {
-  const [order, ...rules] = await rulesOf(page, 'ui.css')
+  const [order, ...rules] = await rulesOf(page, 'zl.css')
 
   expect(order).toEqual({ kind: 'CSSLayerStatementRule', names: ORDER, href: '' })
   expect(rules.map((rule) => rule.kind)).toEqual(rules.map(() => 'CSSImportRule'))

@@ -7,13 +7,13 @@
   "type": "module",
   "exports": {
     "./tokens.css": "./tokens.css",
-    "./ui.css": "./ui.css",
+    "./zl.css": "./zl.css",
     "./css/*": "./css/*",
     "./contract/*": "./contract/*"
   },
   "files": [
     "tokens.css",
-    "ui.css",
+    "zl.css",
     "css",
     "contract"
   ],

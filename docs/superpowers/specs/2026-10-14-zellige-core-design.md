@@ -110,7 +110,7 @@ is loaded.
 | Export                                    | Contents                                                          |
 | ----------------------------------------- | ----------------------------------------------------------------- |
 | `@zellige/core/tokens.css`                | The layer order and the role tokens, with light and dark defaults |
-| `@zellige/core/ui.css`                    | The base layer and every component's CSS                          |
+| `@zellige/core/zl.css`                    | The base layer and every component's CSS                          |
 | `@zellige/core/css/<component>.css`       | One component's CSS, for an application that picks components     |
 | `@zellige/core/contract/<component>.html` | One component's reference HTML, every variant and state           |
 
@@ -122,7 +122,7 @@ Everything is shipped as written; there is no build.
 zellige-core/
   package.json  charter.json  run  CLAUDE.md  README.md
   tokens.css                  layer order + role tokens
-  ui.css                      @imports base.css and every component file
+  zl.css                      @imports base.css and every component file
   css/
     base.css  button.css  field.css  card.css  notice.css  status.css
     badge.css  dialog.css  tabs.css  utility.css
@@ -506,7 +506,7 @@ never by class.
 - **Screenshots**: each contract file in each theme. Baselines are made in the Playwright
   Docker image matching the installed Playwright version, so they do not depend on the machine.
 - **Layers**, against a dataset of every file in `css/`: loaded alone, each file's rules all
-  sit inside a `zl.*` layer, read through the CSSOM; and `ui.css` imports every file.
+  sit inside a `zl.*` layer, read through the CSSOM; and `zl.css` imports every file.
 - **The platform's dialog**, keyboard only: opening moves focus to the frame, the page does not
   scroll behind it, Escape closes it, and focus returns to the opener.
 - **Focus indicator**: every focusable element in the contract shows the outline under
@@ -591,7 +591,7 @@ version of core. Adding one is a minor version.
 | —                                                                  | An accessibility section: focus order, names, headings, states and errors                                                   |
 | Applications and theme files named                                 | Referred to by role; the playground carries a sample theme, and each application tests its own                              |
 
-Classes, tokens and layers are prefixed `zl-` (`zl.` for layers), not the working name's
-`ui-`. `ui-` is a likely prefix for an application's own classes or another library's, and a
+Classes, tokens and layers are prefixed `zl-` (`zl.` for layers), and the stylesheet that
+gathers the components is `zl.css`, not the working name's `ui-` and `ui.css`. `ui-` is a likely prefix for an application's own classes or another library's, and a
 clash would be silent; `zl-` names the kit, stays short in markup, and was cheapest to adopt
 before the first release.

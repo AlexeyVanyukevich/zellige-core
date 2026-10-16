@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 import '@zellige/core/tokens.css'
-import '@zellige/core/ui.css'
+import '@zellige/core/zl.css'
 import { THEMES, type Theme } from './themes'
 
 // Raw text, so what the page holds is each contract file byte for byte.

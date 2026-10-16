@@ -20,7 +20,7 @@ Load the tokens, then the components:
 
 ```css
 @import '@zellige/core/tokens.css';
-@import '@zellige/core/ui.css';
+@import '@zellige/core/zl.css';
 ```
 
 or one component at a time, `@zellige/core/css/button.css`, after `css/base.css`.

@@ -21,19 +21,19 @@ Dialog, Tabs — the tokens and the base layer. It ships no JavaScript and has n
 | Import                                    | Contents                                                          |
 | ----------------------------------------- | ----------------------------------------------------------------- |
 | `@zellige/core/tokens.css`                | The layer order and the role tokens, with light and dark defaults |
-| `@zellige/core/ui.css`                    | `@import`s the base layer and every component file                |
+| `@zellige/core/zl.css`                    | `@import`s the base layer and every component file                |
 | `@zellige/core/css/<file>.css`            | One file, for an application that picks components                |
 | `@zellige/core/contract/<component>.html` | One component's reference markup, every variant and state         |
 
 `package.json`'s `exports` maps exactly these four patterns, and `files` ships exactly
-`tokens.css`, `ui.css`, `css/` and `contract/`. Everything is served as written.
+`tokens.css`, `zl.css`, `css/` and `contract/`. Everything is served as written.
 
-An application loads `tokens.css` and then `ui.css`, or sets the tokens itself instead of the
-first. `ui.css` does not import `tokens.css`.
+An application loads `tokens.css` and then `zl.css`, or sets the tokens itself instead of the
+first. `zl.css` does not import `tokens.css`.
 
 ## Layers
 
-Every kit file — `tokens.css`, `ui.css` and each file in `css/` — opens with the same statement:
+Every kit file — `tokens.css`, `zl.css` and each file in `css/` — opens with the same statement:
 
 ```css
 @layer zl.tokens, zl.base, zl.components;
@@ -109,7 +109,7 @@ returns focus to the opener on close, and Escape closes it. The kit adds the scr
 A static page in `playground/`, served by Vite (`vite.config.ts`) on `127.0.0.1:5180`. It is not
 shipped.
 
-- It imports `@zellige/core/tokens.css` and `@zellige/core/ui.css` by the package's own name, as
+- It imports `@zellige/core/tokens.css` and `@zellige/core/zl.css` by the package's own name, as
   an application would, so a broken `exports` entry stops the page.
 - `main.ts` loads every `contract/*.html` as raw text and puts each in a `section` named by an
   `h2`, one `h3` caption per example. The example comments do not reach the page.
@@ -150,7 +150,7 @@ browser).
 | `page.spec.ts`        | The playground has one `h1`, one `main`, no skipped heading level, no repeated `id`; the theme switcher by keyboard                                                         |
 | `scan.spec.ts`        | axe under `WCAG_TAGS` in every theme, and with each dialog example open                                                                                                     |
 | `focus.spec.ts`       | Every element Tab reaches shows a 2px solid outline in `--zl-focus` at a 2px offset, in every theme                                                                         |
-| `layers.spec.ts`      | Each kit file, loaded alone and unprocessed, opens with the order and keeps every rule in its layer; `ui.css` imports every file in `css/`                                  |
+| `layers.spec.ts`      | Each kit file, loaded alone and unprocessed, opens with the order and keeps every rule in its layer; `zl.css` imports every file in `css/`                                  |
 | `dialog.spec.ts`      | Per dialog example, by keyboard: focus lands on the frame, Tab follows the written order and stays in the dialog, the page does not scroll, Escape closes and focus returns |
 | `screenshots.spec.ts` | Each component alone in every theme, and each dialog example open                                                                                                           |
 | `package.spec.ts`     | `npm pack` ships exactly the four patterns, and each file resolves through `exports`                                                                                        |
