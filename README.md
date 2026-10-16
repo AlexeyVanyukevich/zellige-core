@@ -11,7 +11,7 @@ How the kit is built, and why it is shaped as it is: [`docs/architecture.md`](do
 Over git, at a release tag:
 
 ```json
-"devDependencies": { "@zellige/core": "github:AlexeyVanyukevich/zellige-core#v0.1.0" }
+"devDependencies": { "@zellige/core": "github:AlexeyVanyukevich/zellige-core#v0.1.1" }
 ```
 
 ## Using it
