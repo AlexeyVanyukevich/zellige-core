@@ -1,0 +1,39 @@
+@layer zl.tokens, zl.base, zl.components;
+
+@layer zl.components {
+  /* The text carries the meaning, in the body ink: a tone on its own tint does not reach AA in
+     every theme. The tint and the border repeat the tone. */
+  .zl-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 var(--zl-space-2);
+    border: 1px solid var(--zl-line-strong);
+    border-radius: 999px;
+    background: var(--zl-surface-sunk);
+    color: var(--zl-ink);
+    font-size: var(--zl-text-sm);
+    font-weight: 600;
+    line-height: 1.6;
+    white-space: nowrap;
+  }
+
+  .zl-badge--accent {
+    border-color: var(--zl-accent);
+    background: var(--zl-accent-soft);
+  }
+
+  .zl-badge--success {
+    border-color: var(--zl-success);
+    background: var(--zl-success-soft);
+  }
+
+  .zl-badge--warning {
+    border-color: var(--zl-warning);
+    background: var(--zl-warning-soft);
+  }
+
+  .zl-badge--danger {
+    border-color: var(--zl-danger);
+    background: var(--zl-danger-soft);
+  }
+}

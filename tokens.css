@@ -1,0 +1,55 @@
+/*
+ * The role tokens every component reads. An application themes the kit by setting these from
+ * its own CSS, unlayered, so its values win over the defaults below.
+ */
+@layer zl.tokens, zl.base, zl.components;
+
+@layer zl.tokens {
+  :root {
+    color-scheme: light dark;
+
+    --zl-bg: light-dark(#f6f7f8, #121418);
+    --zl-surface: light-dark(#ffffff, #1a1d22);
+    --zl-surface-sunk: light-dark(#eef0f2, #15171b);
+    --zl-surface-raised: light-dark(#ffffff, #22262c);
+    --zl-ink: light-dark(#15181d, #e7e9ec);
+    --zl-ink-soft: light-dark(#4a515c, #a9b0ba);
+    --zl-ink-faint: light-dark(#646c79, #858d98);
+    --zl-line: light-dark(#dde1e6, #2d3239);
+    --zl-line-strong: light-dark(#b8bfc8, #444b54);
+    --zl-accent: light-dark(#2f5fd0, #7ea6ff);
+    --zl-accent-strong: light-dark(#234aa6, #a5c1ff);
+    --zl-accent-soft: light-dark(#e3eafb, #1f2b45);
+    --zl-on-accent: light-dark(#ffffff, #0d1525);
+    --zl-focus: var(--zl-accent);
+    --zl-success: light-dark(#1f7a4d, #6fcf97);
+    --zl-success-soft: light-dark(#dcf1e6, #17321f);
+    --zl-warning: light-dark(#9a6200, #e5b45a);
+    --zl-warning-soft: light-dark(#fbeccc, #3a2c10);
+    --zl-danger: light-dark(#b93b33, #f07a70);
+    --zl-danger-soft: light-dark(#f8dfdc, #3d1d1b);
+
+    --zl-font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --zl-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+    --zl-text: 15px;
+    --zl-text-sm: 13px;
+    --zl-leading: 1.5;
+    --zl-radius: 10px;
+    --zl-radius-sm: 6px;
+    --zl-tap: 40px;
+    --zl-space-1: 4px;
+    --zl-space-2: 8px;
+    --zl-space-3: 12px;
+    --zl-space-4: 16px;
+    --zl-space-5: 24px;
+    --zl-shadow-low: 0 1px 2px rgb(0 0 0 / 0.08);
+    --zl-shadow-lift: 0 6px 20px rgb(0 0 0 / 0.14);
+    --zl-duration: 150ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --zl-duration: 0ms;
+    }
+  }
+}

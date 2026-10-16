@@ -1,0 +1,83 @@
+@layer zl.tokens, zl.base, zl.components;
+
+@layer zl.components {
+  .zl-field {
+    display: grid;
+    gap: var(--zl-space-1);
+  }
+
+  .zl-field__label {
+    color: var(--zl-ink-soft);
+    font-size: var(--zl-text-sm);
+    font-weight: 600;
+  }
+
+  .zl-field__hint,
+  .zl-field__error {
+    margin: 0;
+    font-size: var(--zl-text-sm);
+  }
+
+  .zl-field__hint {
+    color: var(--zl-ink-faint);
+  }
+
+  .zl-field__error {
+    color: var(--zl-danger);
+    font-weight: 600;
+  }
+
+  .zl-input,
+  .zl-select,
+  .zl-textarea {
+    inline-size: 100%;
+    min-block-size: var(--zl-tap);
+    padding: 0 var(--zl-space-3);
+    border: 1px solid var(--zl-line-strong);
+    border-radius: var(--zl-radius-sm);
+    background-color: var(--zl-surface);
+    color: var(--zl-ink);
+    font: inherit;
+    transition: border-color var(--zl-duration);
+  }
+
+  .zl-textarea {
+    min-block-size: calc(var(--zl-tap) * 2);
+    padding-block: var(--zl-space-2);
+    resize: vertical;
+  }
+
+  /* The native arrow is drawn in the platform's colour; this one follows the theme. */
+  .zl-select {
+    appearance: none;
+    padding-inline-end: calc(var(--zl-space-3) * 2 + 10px);
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--zl-ink-soft) 50%),
+      linear-gradient(135deg, var(--zl-ink-soft) 50%, transparent 50%);
+    background-position:
+      right calc(var(--zl-space-3) + 5px) center,
+      right var(--zl-space-3) center;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+  }
+
+  :is(.zl-input, .zl-textarea)::placeholder {
+    color: var(--zl-ink-faint);
+    opacity: 1;
+  }
+
+  :is(.zl-input, .zl-select, .zl-textarea):hover:not(:disabled) {
+    border-color: var(--zl-ink-faint);
+  }
+
+  /* Shown by the border and by the error's text, which the control names in aria-describedby. */
+  :is(.zl-input, .zl-select, .zl-textarea)[aria-invalid='true'] {
+    border-color: var(--zl-danger);
+  }
+
+  :is(.zl-input, .zl-select, .zl-textarea):disabled {
+    background-color: var(--zl-surface-sunk);
+    color: var(--zl-ink-faint);
+    cursor: not-allowed;
+  }
+}

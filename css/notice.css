@@ -1,0 +1,34 @@
+@layer zl.tokens, zl.base, zl.components;
+
+@layer zl.components {
+  /* The text stays in the body ink: a tone on its own tint does not reach AA in every theme.
+     The tint and the border carry the tone, and the title carries the meaning. */
+  .zl-notice {
+    display: grid;
+    gap: var(--zl-space-1);
+    padding: var(--zl-space-3) var(--zl-space-4);
+    border: 1px solid var(--zl-accent);
+    border-inline-start-width: 4px;
+    border-radius: var(--zl-radius-sm);
+    background: var(--zl-accent-soft);
+    color: var(--zl-ink);
+  }
+
+  .zl-notice--danger {
+    border-color: var(--zl-danger);
+    background: var(--zl-danger-soft);
+  }
+
+  .zl-notice__title {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .zl-notice__body > :first-child {
+    margin-block-start: 0;
+  }
+
+  .zl-notice__body > :last-child {
+    margin-block-end: 0;
+  }
+}

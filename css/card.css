@@ -1,0 +1,21 @@
+@layer zl.tokens, zl.base, zl.components;
+
+@layer zl.components {
+  .zl-card {
+    padding: var(--zl-space-4);
+    border: 1px solid var(--zl-line);
+    border-radius: var(--zl-radius);
+    background: var(--zl-surface);
+    box-shadow: var(--zl-shadow-low);
+  }
+
+  /* The card's own padding is its spacing: its content's first and last margins collapse into
+     nothing rather than doubling it. */
+  .zl-card > :first-child {
+    margin-block-start: 0;
+  }
+
+  .zl-card > :last-child {
+    margin-block-end: 0;
+  }
+}

@@ -1,0 +1,45 @@
+/* The playground's own layout. Unlayered, like an application's styles, and never shipped. */
+
+body {
+  margin: 0;
+}
+
+.playground__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 24px;
+}
+
+.playground__title {
+  margin: 0;
+  font-size: 20px;
+}
+
+.playground__main {
+  display: grid;
+  gap: 32px;
+  padding: 8px 24px 48px;
+}
+
+/* An example is as wide as a form column. Controls fill it, as they would a form; anything
+   else keeps its own width. */
+.playground__example {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  max-inline-size: 28rem;
+  margin-block-end: 16px;
+}
+
+.playground__example > :is(.zl-field, .zl-tabs) {
+  justify-self: stretch;
+}
+
+.playground__example > h3 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}

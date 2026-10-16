@@ -20,13 +20,60 @@ prepare() {
   need_hooks
 }
 
-# Types (`tsc`), lint (`oxlint --deny-warnings`), the markup checks (`html-validate`,
-# `charter scan`) and the suites join this with the first source and HTML files: until then
-# each tool finds no input and fails on that alone.
+# The browsers run in the Playwright image matching the installed runner, so screenshots render
+# the same on every machine; the runner stays on the host and the playground with it. The
+# image tag is read from the installed package, never written here.
+BROWSER_PORT="${ZELLIGE_BROWSER_PORT:-3555}"
+
+browser_suite() {
+  need_docker
+  local version name
+  version="$(node -p "require('@playwright/test/package.json').version")"
+  name="zellige-core-browsers-$$"
+
+  step "Starting Playwright ${version}'s browsers in Docker"
+  docker run --detach --rm --init --ipc=host --name "$name" \
+    --publish "127.0.0.1:${BROWSER_PORT}:${BROWSER_PORT}" \
+    --volume zellige-core-npm:/root/.npm \
+    "mcr.microsoft.com/playwright:v${version}-noble" \
+    npx --yes "playwright@${version}" run-server --port "$BROWSER_PORT" --host 0.0.0.0 >/dev/null
+  trap "docker stop '$name' >/dev/null 2>&1 || true" EXIT
+
+  local waited=0
+  until docker logs "$name" 2>&1 | grep -q 'Listening on'; do
+    [ "$waited" -lt 120 ] || die "The browser server did not start." "Read: docker logs $name"
+    sleep 1
+    waited=$((waited + 1))
+  done
+
+  step "Browser suite"
+  ZELLIGE_BROWSER_WS="ws://127.0.0.1:${BROWSER_PORT}/" npx playwright test "$@"
+}
+
+scenario_test() {
+  prepare
+  browser_suite "$@"
+  ok "Browser suite passed"
+}
+
+scenario_dev() {
+  prepare
+  step "Playground at http://127.0.0.1:5180"
+  npx vite
+}
+
 scenario_check() {
   prepare
   step "Formatting"
   npx prettier --check .
+  step "Types"
+  npx tsc
+  step "Lint"
+  npx oxlint --deny-warnings
+  step "Markup"
+  npx html-validate contract playground
+  npx --no charter scan contract playground
+  browser_suite
   ok "All checks passed"
 }
 
@@ -34,7 +81,9 @@ usage() {
   cat <<EOF
 Usage: ./run <scenario>
 
-  ${BOLD}check${OFF}   formatting
+  ${BOLD}dev${OFF}     the playground, served by Vite
+  ${BOLD}test${OFF}    the browser suite, in the Playwright image; arguments go to playwright test
+  ${BOLD}check${OFF}   formatting, types, lint, markup and the browser suite
 EOF
 }
 
@@ -43,6 +92,8 @@ SCENARIO="${1:-}"
 
 case "$SCENARIO" in
   check)        scenario_check ;;
+  test)         scenario_test "$@" ;;
+  dev)          scenario_dev ;;
   '')           prepare; ok "Ready"; usage ;;
   -h|--help)    usage ;;
   *)            usage; die "Unknown scenario: $SCENARIO" ;;
