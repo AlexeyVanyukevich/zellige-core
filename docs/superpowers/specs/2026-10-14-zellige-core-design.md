@@ -42,10 +42,10 @@ tilework in which one set of cut shapes makes every pattern:
 
 ### Success criteria
 
-1. Every component's reference HTML renders in four themes — the kit default (light and dark),
-   the console's and the booking admin's — and the two application themes are only token
-   mappings and class overrides, never markup changes.
-2. Every reference state passes an axe scan against WCAG 2.2 AA in all four themes.
+1. Every component's reference HTML renders in the kit's default theme and in a sample
+   application theme, each light and dark, and the sample theme is only a token mapping, never a
+   markup change. Each application proves its own theme in its own browser journeys (§9).
+2. Every reference state passes an axe scan against WCAG 2.2 AA in every playground theme.
 3. The React binding's output matches the reference HTML, enforced by a test in the binding
    against the published `contract/` (the React design, §6).
 4. The task board's web workspace is built on the kit; the console and then the booking admin
@@ -130,7 +130,7 @@ zellige-core/
     button.html  field.html  card.html  notice.html  status.html
     badge.html  dialog.html  tabs.html
   playground/                 a static page: every contract file, a theme switcher
-    themes/console.css  themes/bookings.css
+    themes/sample.css
   tests/ui/
 ```
 
@@ -156,7 +156,7 @@ file order or selector specificity. No `!important` is needed to override the ki
 Components read only these. All are prefixed `--zl-`. Colours are declared with `light-dark()`
 under `color-scheme: light dark`, one declaration per token. Every ink and tone pairing meets
 WCAG 2.2 AA contrast on the surfaces it is used on; the axe scans in §8 hold the defaults and
-both application themes to it.
+the sample theme to it, and each application's journeys hold its own theme to it.
 
 | Token            | Light default      | Dark default | Role                       |
 | ---------------- | ------------------ | ------------ | -------------------------- |
@@ -221,9 +221,11 @@ A theme is the application's own CSS mapping its tokens onto roles:
 - **No per-component tokens in v1.** A finer change goes through the part's class. A component
   token such as `--zl-button-radius` is added only when an application needs one.
 
-The playground's `themes/console.css` and `themes/bookings.css` are copies of these two
-mappings with the applications' palettes inlined, so the scans cover them without either
-application installed.
+The playground's `themes/sample.css` is an application theme that belongs to no application: a
+warm palette, a serif face, square corners and larger targets, far enough from the defaults to
+show the mapping carries a whole look. The applications' own themes are not copied here. A
+copy drifts from its application unseen, and core would name its consumers; each application's
+theme file and its scans live in that application instead (§9).
 
 ## 6. The contract
 
@@ -475,7 +477,7 @@ with a Retry button the application wires or leaves out.
 
 A static page, served by Vite in development and in the browser tests, and not shipped. A short
 script loads every `contract/*.html` into the page, so what is scanned is the contract byte for
-byte; a theme switcher applies the four themes. Its script also opens each dialog variant with
+byte; a theme switcher applies the kit's and the sample's themes, each light and dark. Its script also opens each dialog variant with
 `showModal()`, the one piece of behaviour a plain page brings.
 
 It is a valid page in its own right — one `h1`, headings that skip no level, a `main` landmark
@@ -498,7 +500,7 @@ has no pure functions, so it has no unit suite. Elements are found by role and a
 never by class.
 
 - **Accessibility**: `@axe-core/playwright` with one shared `WCAG_TAGS` constant — `wcag2a`,
-  `wcag2aa`, `wcag21a`, `wcag21aa`, `wcag22aa` — over every contract state in all four themes,
+  `wcag2aa`, `wcag21a`, `wcag21aa`, `wcag22aa` — over every contract state in every theme,
   with each dialog variant scanned open. Any violation fails; a known one is excluded for one
   selector with a backlog entry.
 - **Screenshots**: each contract file in each theme. Baselines are made in the Playwright
@@ -531,13 +533,14 @@ Each application's migration gets its own short plan.
    dialog, so it is the quick check of the whole flow.
 4. **The booking admin** migrates last. Its sheet moves from a `div` modal to the native
    `<dialog>`, on a mobile-first PWA, after Dialog has been used in the task board and the
-   booking admin's theme has passed the playground's scans.
+   booking admin's journeys have passed their scans in its theme.
 
 Each migration:
 
 - Its first commit adds both packages, a theme file mapping the application's tokens onto
   `--zl-*`, and a line in the application's `CLAUDE.md` naming zellige as its component kit,
-  which charter's `frontend` rule reads. Nothing changes on screen.
+  which charter's `frontend` rule reads. Nothing changes on screen. From then on the
+  application's journeys, which scan every state they reach, hold its theme to WCAG 2.2 AA.
 - After that it replaces one component per commit and deletes the application's CSS for it.
   The application's browser journeys stay green at every commit.
 - A difference between the application and the kit is settled in the theme file or by a class
@@ -574,19 +577,19 @@ version of core. Adding one is a minor version.
 
 ## 12. What changed from the 2026-10-12 design
 
-| Before                                                             | Now                                                                                                        |
-| ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
-| One package, `ui-kit`, with an optional React section              | `@zellige/core` here, `@zellige/react` in its own repository                                               |
-| `react`, `react-dom` as optional peers of the one package          | Core has no React at all; the binding requires React and React Aria                                        |
-| One playground for components and themes                           | Core's static playground scans and screenshots the contract in four themes; the binding's covers behaviour |
-| dev-kit 2.x sections `common`, `ui`, `testing`                     | charter 3.3: `frontend typescript playwright html` here; the binding's modules are in its design           |
-| Tabs' keyboard model hand-written in `src/core/next-tab.ts`        | React Aria's hooks, in the binding; core holds only the markup                                             |
-| Every tab carries `aria-controls`; the panel always `tabindex="0"` | Only the selected tab does; the panel only when it holds nothing focusable; `aria-orientation` added       |
-| Axe scan in four themes                                            | Against WCAG 2.2 AA with one `WCAG_TAGS` constant, plus keyboard journeys and a focus-indicator test       |
-| —                                                                  | Notice's announcement limit, Badge's text-first meaning, the layer test, the playground as a valid page    |
-| —                                                                  | Static markup checks: `html-validate` and `charter scan` over `contract/` and `playground/`                |
-| —                                                                  | An accessibility section: focus order, names, headings, states and errors                                  |
-| Applications and theme files named                                 | Referred to by role; `themes/console.css`, `themes/bookings.css`                                           |
+| Before                                                             | Now                                                                                                                         |
+| ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| One package, `ui-kit`, with an optional React section              | `@zellige/core` here, `@zellige/react` in its own repository                                                                |
+| `react`, `react-dom` as optional peers of the one package          | Core has no React at all; the binding requires React and React Aria                                                         |
+| One playground for components and themes                           | Core's static playground scans and screenshots the contract in the kit's and a sample theme; the binding's covers behaviour |
+| dev-kit 2.x sections `common`, `ui`, `testing`                     | charter 3.3: `frontend typescript playwright html` here; the binding's modules are in its design                            |
+| Tabs' keyboard model hand-written in `src/core/next-tab.ts`        | React Aria's hooks, in the binding; core holds only the markup                                                              |
+| Every tab carries `aria-controls`; the panel always `tabindex="0"` | Only the selected tab does; the panel only when it holds nothing focusable; `aria-orientation` added                        |
+| Axe scan in four themes                                            | Against WCAG 2.2 AA with one `WCAG_TAGS` constant, plus keyboard journeys and a focus-indicator test                        |
+| —                                                                  | Notice's announcement limit, Badge's text-first meaning, the layer test, the playground as a valid page                     |
+| —                                                                  | Static markup checks: `html-validate` and `charter scan` over `contract/` and `playground/`                                 |
+| —                                                                  | An accessibility section: focus order, names, headings, states and errors                                                   |
+| Applications and theme files named                                 | Referred to by role; the playground carries a sample theme, and each application tests its own                              |
 
 Classes, tokens and layers are prefixed `zl-` (`zl.` for layers), not the working name's
 `ui-`. `ui-` is a likely prefix for an application's own classes or another library's, and a

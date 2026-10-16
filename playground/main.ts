@@ -1,8 +1,6 @@
 /// <reference types="vite/client" />
 import '@zellige/core/tokens.css'
 import '@zellige/core/ui.css'
-// The booking admin's font, which its theme names. Loaded for every theme; only that one uses it.
-import '@fontsource-variable/golos-text'
 import { THEMES, type Theme } from './themes'
 
 // Raw text, so what the page holds is each contract file byte for byte.

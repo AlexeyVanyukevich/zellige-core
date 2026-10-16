@@ -1,0 +1,28 @@
+/*
+ * A sample application theme, belonging to no application: it proves that a look far from the
+ * kit's — warm paper, a green accent, a serif face, square corners, larger targets — is only a
+ * token mapping, with no markup change. Unlayered, as an application's theme is. Each pair is
+ * light, then dark; every text pairing meets WCAG 2.2 AA, which the scans check.
+ */
+:root {
+  --zl-bg: light-dark(#f4f1ea, #1a1814);
+  --zl-surface: light-dark(#fffdf8, #23201b);
+  --zl-surface-sunk: light-dark(#ece7dc, #1d1b17);
+  --zl-surface-raised: light-dark(#fffdf8, #2b2721);
+  --zl-ink: light-dark(#23201a, #efe9de);
+  --zl-ink-soft: light-dark(#514b40, #c2b9a8);
+  --zl-ink-faint: light-dark(#665e50, #9c937f);
+  --zl-line: light-dark(#ddd5c5, #3a352d);
+  --zl-line-strong: light-dark(#bfb5a2, #554e42);
+  --zl-accent: light-dark(#2f6b4f, #7cc39d);
+  --zl-accent-strong: light-dark(#22513b, #a3d8bb);
+  --zl-accent-soft: light-dark(#dcebe2, #1f3329);
+  --zl-on-accent: light-dark(#ffffff, #10241a);
+  --zl-danger: light-dark(#a83a2c, #ef8a7b);
+  --zl-danger-soft: light-dark(#f5ddd7, #3b201b);
+
+  --zl-font: Georgia, 'DejaVu Serif', serif;
+  --zl-radius: 4px;
+  --zl-radius-sm: 2px;
+  --zl-tap: 44px;
+}

@@ -12,13 +12,8 @@ export interface Theme {
 export const THEMES: readonly Theme[] = [
   { name: 'kit-light', label: 'Kit, light', colorScheme: 'light' },
   { name: 'kit-dark', label: 'Kit, dark', colorScheme: 'dark' },
-  { name: 'console', label: 'Console', colorScheme: 'dark', stylesheet: 'console' },
-  // The booking admin's palette has both schemes, so it is checked in each.
-  {
-    name: 'bookings-light',
-    label: 'Bookings, light',
-    colorScheme: 'light',
-    stylesheet: 'bookings',
-  },
-  { name: 'bookings-dark', label: 'Bookings, dark', colorScheme: 'dark', stylesheet: 'bookings' },
+  // An application's theme, in both schemes. Each real application proves its own theme in its
+  // own suite; this one proves the mechanism.
+  { name: 'sample-light', label: 'Sample, light', colorScheme: 'light', stylesheet: 'sample' },
+  { name: 'sample-dark', label: 'Sample, dark', colorScheme: 'dark', stylesheet: 'sample' },
 ]

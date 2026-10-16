@@ -10,9 +10,8 @@ Roles used below:
 
 - **The binding** — `@zellige/react`, in its own repository. It renders this package's markup
   exactly and owns behaviour.
-- **An application** — anything that installs the kit and themes it.
-- **The console** and **the booking admin** — the two applications whose palettes the playground
-  carries as themes.
+- **An application** — anything that installs the kit and themes it. Its theme file and the
+  scans that hold it to WCAG 2.2 AA live in the application, not here.
 
 Version 0.1 holds eight components — Button, Field, Card, Notice, the status states, Badge,
 Dialog, Tabs — the tokens and the base layer. It ships no JavaScript and has no build.
@@ -74,12 +73,14 @@ The files are the documentation of the markup; this section gives their rules, n
   props on these names.
 - **Every `id` in `contract/` is unique across all its files,** prefixed by the component's name
   (`field-hint`, `dialog-side-title`), because the playground puts every file on one page.
-- **Every part has a `zl-` BEM class.** Variants are modifier classes (`.zl-button--danger`).
+- **Every part has a `zl-` BEM class,** and every token is `--zl-*` and every layer `zl.*`.
+  `zl-` rather than a generic `ui-`, so the kit's names cannot clash silently with an
+  application's own. Variants are modifier classes (`.zl-button--danger`).
   States are native and ARIA attributes, never classes, and the CSS selects on them:
   `:disabled`, `[aria-invalid='true']`, `[aria-busy='true']`, `[aria-selected='true']`,
   `:modal`.
 - **Text stays in `--zl-ink` in Badge and Notice.** A tone on its own tint is below 4.5:1 in
-  the light themes (warning 4.36:1, danger 4.11–4.44:1), so the tint and a border in the tone
+  the kit's light defaults (warning 4.36:1, danger 4.44:1), so the tint and a border in the tone
   carry it, and the text carries the meaning.
 - **The dialog's head and foot are `div`s.** A `header` or `footer` would be read as a page
   landmark; html-validate's `unique-landmark` reports it.
@@ -113,18 +114,17 @@ shipped.
 - `main.ts` loads every `contract/*.html` as raw text and puts each in a `section` named by an
   `h2`, one `h3` caption per example. The example comments do not reach the page.
 - `?theme=<name>` picks a theme from `playground/themes.ts`, which the switcher and every themed
-  test read: `kit-light`, `kit-dark`, `console`, `bookings-light`, `bookings-dark`. A theme sets
-  `color-scheme` on the root and, for the two applications, adds its file from
-  `playground/themes/` after the kit.
+  test read: `kit-light`, `kit-dark`, `sample-light`, `sample-dark`. A theme sets
+  `color-scheme` on the root and, for the sample, adds `playground/themes/sample.css` after the
+  kit.
 - `?component=<name>` shows that component alone, which is how screenshots are taken.
 - Each dialog example gets an "Open …" button that sets `autofocus` on the frame and calls
   `showModal()` — the one piece of behaviour a hand-written page brings.
 
-`themes/console.css` and `themes/bookings.css` copy the two applications' palettes onto `--zl-*`.
-Each names, in its header, the file and commit it was copied from. The booking admin's light and
-dark pairs are written as `light-dark()`; the application itself switches them by media query.
-Its font comes from `@fontsource-variable/golos-text`, a dev dependency only the playground
-imports.
+`themes/sample.css` belongs to no application. It maps a warm palette with a green accent, a
+serif face, 4px corners and a 44px tap height onto `--zl-*`, light and dark, unlayered as an
+application's theme is: the proof that a whole look is a token mapping. Every text pairing in it
+meets AA, and the scans hold it there.
 
 ## Checks
 
@@ -169,13 +169,14 @@ committed; the scans cannot judge the look.
 
 ## Releasing
 
-Version 0.x until the console and the booking admin have both migrated. A release is the
-`chore: release X.Y.Z` commit on `main` and its `vX.Y.Z` tag. A change to the contract starts
-here and is released first; the binding then raises its peer range and dev dependency and proves
-the pair with its contract test. Adding a class, token or contract file needs no binding release.
+Version 0.x until the two applications that already have their own components have both
+migrated onto the kit. A release is the `chore: release X.Y.Z` commit on `main` and its `vX.Y.Z`
+tag. A change to the contract starts here and is released first; the binding then raises its peer
+range and dev dependency and proves the pair with its contract test. Adding a class, token or contract file needs no binding release.
 
 ## What is not built yet
 
-- WebKit is not run, so nothing here proves the kit on the booking admin's iPhones.
+- WebKit is not run, so nothing here proves the kit on iPhones, where one of those applications
+  is used.
 - Nothing is published to the private registry; installs are over git at a tag.
 - No screen reader, 200% zoom or 320 px viewport has been tried.

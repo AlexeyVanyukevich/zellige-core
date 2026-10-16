@@ -7,10 +7,4 @@ export interface KnownFailure {
   backlog: string
 }
 
-export const KNOWN: readonly KnownFailure[] = [
-  {
-    theme: 'bookings-light',
-    selector: '.zl-field__hint',
-    backlog: "The booking admin's faint ink fails AA as text",
-  },
-]
+export const KNOWN: readonly KnownFailure[] = []
