@@ -84,9 +84,10 @@ The files are the documentation of the markup; this section gives their rules, n
   carry it, and the text carries the meaning.
 - **The dialog's head and foot are `div`s.** A `header` or `footer` would be read as a page
   landmark; html-validate's `unique-landmark` reports it.
-- **Tabs' attributes are React Aria 3.53.1's** (`useTabList`, `useTab`, `useTabPanel`): only
-  the selected tab has `aria-controls`, and the panel has `tabindex="0"` only when it holds
-  nothing focusable. Tabs has no behaviour here.
+- **Tabs' attributes are React Aria 3.53.1's** (`useTabList`, `useTab`, `useTabPanel`): the
+  list has an `id`, the base React Aria builds the tab and panel ids from, which nothing refers
+  to; only the selected tab has `aria-controls`; and the panel has `tabindex="0"` only when it
+  holds nothing focusable. Tabs has no behaviour here.
 - **The kit's own text** is `Close`, `Retry` and `Loading…`.
 
 | File          | Examples                                                                                                |
