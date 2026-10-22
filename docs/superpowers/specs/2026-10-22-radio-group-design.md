@@ -1,6 +1,6 @@
 # Radio group — design
 
-Status: **approved**, 2026-10-22; designed 2026-10-22.
+Status: **built**, 2026-10-22; approved and designed 2026-10-22.
 
 > **This becomes a decision record once the slice ships.**
 >

@@ -13,8 +13,8 @@ Roles used below:
 - **An application** — anything that installs the kit and themes it. Its theme file and the
   scans that hold it to WCAG 2.2 AA live in the application, not here.
 
-Version 0.1 holds eight components — Button, Field, Card, Notice, the status states, Badge,
-Dialog, Tabs — the tokens and the base layer. It ships no JavaScript and has no build.
+Version 0.2 holds nine components — Button, Field, the radio group, Card, Notice, the status
+states, Badge, Dialog, Tabs — the tokens and the base layer. It ships no JavaScript and has no build.
 
 ## What ships
 
@@ -88,6 +88,18 @@ The files are the documentation of the markup; this section gives their rules, n
   list has an `id`, the base React Aria builds the tab and panel ids from, which nothing refers
   to; only the selected tab has `aria-controls`; and the panel has `tabindex="0"` only when it
   holds nothing focusable. Tabs has no behaviour here.
+- **The radio group's attributes are React Aria 3.53.1's** (`useRadioGroup`, `useRadio`), read
+  after mount: `role="radiogroup"` on a `div` named by its label's `id`; every radio
+  `tabindex="0"` while none is checked, then `0` on the checked one and `-1` on the rest; each
+  radio described by its own description, then the group's error, then the group's description.
+  Two placements are the kit's own: a radio's description sits beside its `<label>`, not inside
+  it, so the radio's name is the label's text alone; and the input is the platform's, visible,
+  coloured by `accent-color` and sized from the label's font. Its keyboard model is the
+  platform's, which React Aria repeats: one Tab stop, the arrow keys move and check. Each
+  example's `name` is its `id`, so no two examples on the playground form one group.
+- **The radio group has no gap between its radios**: each row is a tap high, and an invalid
+  group's danger rule runs down them unbroken. Its label, description and error keep a small
+  margin.
 - **The kit's own text** is `Close`, `Retry` and `Loading…`.
 
 | File          | Examples                                                                                                |
@@ -100,6 +112,7 @@ The files are the documentation of the markup; this section gives their rules, n
 | `badge.html`  | neutral, accent, success, warning, danger                                                               |
 | `dialog.html` | center, side, without foot                                                                              |
 | `tabs.html`   | text panel, panel with control                                                                          |
+| `radio.html`  | plain, checked, invalid, disabled                                                                       |
 
 The dialog's behaviour is the platform's: `showModal()` makes it modal, moves focus into it and
 returns focus to the opener on close, and Escape closes it. The kit adds the scroll lock, in CSS:
@@ -153,6 +166,7 @@ browser).
 | `focus.spec.ts`       | Every element Tab reaches shows a 2px solid outline in `--zl-focus` at a 2px offset, in every theme                                                                         |
 | `layers.spec.ts`      | Each kit file, loaded alone and unprocessed, opens with the order and keeps every rule in its layer; `zl.css` imports every file in `css/`                                  |
 | `dialog.spec.ts`      | Per dialog example, by keyboard: focus lands on the frame, Tab follows the written order and stays in the dialog, the page does not scroll, Escape closes and focus returns |
+| `radio.spec.ts`       | A radio group is one Tab stop; Arrow Down moves to the next radio and checks it; Shift+Tab returns to the checked one                                                       |
 | `screenshots.spec.ts` | Each component alone in every theme, and each dialog example open                                                                                                           |
 | `package.spec.ts`     | `npm pack` ships exactly the four patterns, and each file resolves through `exports`                                                                                        |
 
