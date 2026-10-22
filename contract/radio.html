@@ -1,0 +1,135 @@
+<!-- example: plain -->
+<div
+  class="zl-radio-group"
+  role="radiogroup"
+  aria-orientation="vertical"
+  id="radio-plain"
+  aria-labelledby="radio-plain-label"
+>
+  <span class="zl-radio-group__label" id="radio-plain-label">Retries</span>
+  <div class="zl-radio">
+    <label class="zl-radio__label">
+      <input class="zl-radio__input" type="radio" name="radio-plain" value="three" tabindex="0" />
+      Three times
+    </label>
+  </div>
+  <div class="zl-radio">
+    <label class="zl-radio__label">
+      <input class="zl-radio__input" type="radio" name="radio-plain" value="five" tabindex="0" />
+      Five times
+    </label>
+  </div>
+  <div class="zl-radio">
+    <label class="zl-radio__label">
+      <input class="zl-radio__input" type="radio" name="radio-plain" value="ten" tabindex="0" />
+      Ten times
+    </label>
+  </div>
+</div>
+
+<!-- example: checked -->
+<div
+  class="zl-radio-group"
+  role="radiogroup"
+  aria-orientation="vertical"
+  id="radio-checked"
+  aria-labelledby="radio-checked-label"
+  aria-describedby="radio-checked-description"
+>
+  <span class="zl-radio-group__label" id="radio-checked-label">Retries</span>
+  <div class="zl-radio">
+    <label class="zl-radio__label">
+      <input
+        class="zl-radio__input"
+        type="radio"
+        name="radio-checked"
+        value="three"
+        tabindex="-1"
+        aria-describedby="radio-checked-description"
+      />
+      Three times
+    </label>
+  </div>
+  <div class="zl-radio">
+    <label class="zl-radio__label">
+      <input
+        class="zl-radio__input"
+        type="radio"
+        name="radio-checked"
+        value="five"
+        tabindex="0"
+        checked
+        aria-describedby="radio-checked-five-description radio-checked-description"
+      />
+      Five times
+    </label>
+    <p class="zl-radio__description" id="radio-checked-five-description">Slower, but surer</p>
+  </div>
+  <p class="zl-radio-group__description" id="radio-checked-description">
+    How often a failed request is tried again
+  </p>
+</div>
+
+<!-- example: invalid -->
+<div
+  class="zl-radio-group"
+  role="radiogroup"
+  aria-invalid="true"
+  aria-orientation="vertical"
+  id="radio-invalid"
+  aria-labelledby="radio-invalid-label"
+  aria-describedby="radio-invalid-error"
+>
+  <span class="zl-radio-group__label" id="radio-invalid-label">Backoff</span>
+  <div class="zl-radio">
+    <label class="zl-radio__label">
+      <input
+        class="zl-radio__input"
+        type="radio"
+        name="radio-invalid"
+        value="fixed"
+        tabindex="0"
+        aria-describedby="radio-invalid-error"
+      />
+      Fixed
+    </label>
+  </div>
+  <div class="zl-radio">
+    <label class="zl-radio__label">
+      <input
+        class="zl-radio__input"
+        type="radio"
+        name="radio-invalid"
+        value="doubling"
+        tabindex="0"
+        aria-describedby="radio-invalid-error"
+      />
+      Doubling
+    </label>
+  </div>
+  <p class="zl-radio-group__error" id="radio-invalid-error">Choose a backoff</p>
+</div>
+
+<!-- example: disabled -->
+<div
+  class="zl-radio-group"
+  role="radiogroup"
+  aria-disabled="true"
+  aria-orientation="vertical"
+  id="radio-disabled"
+  aria-labelledby="radio-disabled-label"
+>
+  <span class="zl-radio-group__label" id="radio-disabled-label">Region</span>
+  <div class="zl-radio">
+    <label class="zl-radio__label">
+      <input class="zl-radio__input" type="radio" name="radio-disabled" value="north" disabled />
+      North
+    </label>
+  </div>
+  <div class="zl-radio">
+    <label class="zl-radio__label">
+      <input class="zl-radio__input" type="radio" name="radio-disabled" value="south" disabled />
+      South
+    </label>
+  </div>
+</div>

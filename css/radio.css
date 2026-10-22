@@ -1,0 +1,84 @@
+@layer zl.tokens, zl.base, zl.components;
+
+@layer zl.components {
+  /* Markup only: native radios carry the keyboard model; a binding's primitive library sets
+     the group's attributes these rules select on. */
+  /* No gap between radios: each row is already a tap high, and an invalid group's rule runs
+     unbroken down them. */
+  .zl-radio-group {
+    display: grid;
+    align-content: start;
+  }
+
+  .zl-radio-group__label {
+    margin-block-end: var(--zl-space-1);
+    color: var(--zl-ink-soft);
+    font-size: var(--zl-text-sm);
+    font-weight: 600;
+  }
+
+  .zl-radio {
+    display: grid;
+  }
+
+  /* The whole row is the target, not only the input. Its first line sits in the middle of a
+     tap's height; a label that wraps grows the row downwards. */
+  .zl-radio__label {
+    display: flex;
+    align-items: baseline;
+    gap: var(--zl-space-2);
+    min-block-size: var(--zl-tap);
+    padding-block: calc((var(--zl-tap) - 1lh) / 2);
+    color: var(--zl-ink);
+    cursor: pointer;
+  }
+
+  /* The platform draws the checked dot, a shape and not only a colour; forced colours keep it. */
+  .zl-radio__input {
+    flex: none;
+    font: inherit;
+    inline-size: 1.125em;
+    block-size: 1.125em;
+    margin: 0;
+    accent-color: var(--zl-accent);
+    translate: 0 0.15em;
+  }
+
+  /* Starts under the label's text, not under the input. */
+  .zl-radio__description {
+    margin: 0;
+    margin-block-start: calc(var(--zl-space-2) * -1);
+    padding-block-end: var(--zl-space-2);
+    padding-inline-start: calc(var(--zl-text) * 1.125 + var(--zl-space-2));
+    color: var(--zl-ink-faint);
+    font-size: var(--zl-text-sm);
+  }
+
+  .zl-radio-group__description,
+  .zl-radio-group__error {
+    margin: 0;
+    margin-block-start: var(--zl-space-1);
+    font-size: var(--zl-text-sm);
+  }
+
+  .zl-radio-group__description {
+    color: var(--zl-ink-faint);
+  }
+
+  .zl-radio-group__error {
+    color: var(--zl-danger);
+    font-weight: 600;
+  }
+
+  /* Shown by this rule and by the error's text, which every radio names in aria-describedby. */
+  .zl-radio-group[aria-invalid='true'] > .zl-radio {
+    padding-inline-start: var(--zl-space-3);
+    border-inline-start: 2px solid var(--zl-danger);
+  }
+
+  .zl-radio-group[aria-disabled='true'] .zl-radio__label,
+  .zl-radio__label:has(.zl-radio__input:disabled) {
+    color: var(--zl-ink-faint);
+    cursor: not-allowed;
+  }
+}
