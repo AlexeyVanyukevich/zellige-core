@@ -1,6 +1,6 @@
 {
   "name": "@zellige/core",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Design tokens, CSS and reference markup for the zellige component kit",
   "license": "UNLICENSED",
   "private": true,
