@@ -1,8 +1,9 @@
 # @zellige/core
 
-Design tokens, CSS and reference markup for the zellige component kit: Button, Field, Card,
-Notice, Empty / Loading / Trouble, Badge, Dialog and Tabs. No JavaScript and no framework. The
-React binding, `@zellige/react`, renders the same markup and lives in its own repository.
+Design tokens, CSS and reference markup for the zellige component kit: Button, Field, Radio
+group, Card, Notice, Empty / Loading / Trouble, Badge, Dialog and Tabs. No JavaScript and no
+framework. The React binding, `@zellige/react`, renders the same markup and lives in its own
+repository.
 
 How the kit is built, and why it is shaped as it is: [`docs/architecture.md`](docs/architecture.md).
 
