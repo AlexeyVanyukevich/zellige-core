@@ -1,5 +1,9 @@
 {
   "workspaces": {
     ".": ["frontend", "typescript", "playwright", "html"]
+  },
+  "release": {
+    "verify": "./run check",
+    "files": ["README.md"]
   }
 }
