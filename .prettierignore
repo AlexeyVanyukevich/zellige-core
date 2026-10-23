@@ -14,3 +14,4 @@ playwright-report
 
 # Synced from the kit at session start.
 .claude/rules/charter
+.claude/skills/charter-*
