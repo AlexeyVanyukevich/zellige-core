@@ -1,10 +1,10 @@
 // Accessibility failures that are known and not yet fixed. Each is left out of the scan for one
-// selector in one theme, never for the suite, and each has its entry in `docs/backlog.md`.
-// Fixing one deletes its row and its entry together.
+// selector in one theme, never for the suite, and each has its GitHub issue. Fixing one deletes
+// its row in the commit that closes the issue.
 export interface KnownFailure {
   theme: string
   selector: string
-  backlog: string
+  issue: number
 }
 
 export const KNOWN: readonly KnownFailure[] = []

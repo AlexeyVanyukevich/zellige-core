@@ -4,7 +4,7 @@ What `@zellige/core` is today. This document is authoritative for that: where it
 record disagree, this one is right. The design record,
 [`docs/superpowers/specs/2026-10-14-zellige-core-design.md`](superpowers/specs/2026-10-14-zellige-core-design.md),
 says **why** the kit has the shape it does; read it for reasons, never for behaviour. Known
-defects that were found and not yet fixed are listed in [`docs/backlog.md`](backlog.md), not here.
+defects that were found and not yet fixed are the repository's open GitHub issues, not here.
 
 Roles used below:
 
@@ -175,7 +175,7 @@ The datasets are read from the directories (`tests/ui/contract.ts`, the file lis
 Only the dialog's tab order is written by hand, and a test fails if an example lacks one.
 
 `tests/ui/known.ts` lists accessibility failures left out of the scan, one selector in one theme
-each, every one with its backlog entry.
+each, every one with the number of its GitHub issue.
 
 Screenshots run only through `./run test`: without `ZELLIGE_BROWSER_WS` the spec skips itself.
 Baselines live in `tests/ui/__screenshots__/` with no platform in their names, and
