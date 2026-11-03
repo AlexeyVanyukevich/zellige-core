@@ -54,7 +54,7 @@ for (const example of EXAMPLES) {
     await openPlayground(page, theme, 'prose')
     const prose = page
       .locator('.playground__example', {
-        has: page.getByRole('heading', { name: example, exact: true }),
+        has: page.getByRole('heading', { name: example.replaceAll('-', ' '), exact: true }),
       })
       .locator('.zl-prose')
 
@@ -113,7 +113,7 @@ for (const theme of THEMES) {
     for (const { example, name } of WRAPPERS) {
       const wrapper = page
         .locator('.playground__example', {
-          has: page.getByRole('heading', { name: example, exact: true }),
+          has: page.getByRole('heading', { name: example.replaceAll('-', ' '), exact: true }),
         })
         .getByRole('group', { name, exact: true })
       const overflow = await wrapper.evaluate((element) => ({
