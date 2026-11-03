@@ -13,8 +13,8 @@ Roles used below:
 - **An application** — anything that installs the kit and themes it. Its theme file and the
   scans that hold it to WCAG 2.2 AA live in the application, not here.
 
-Version 0.2 holds nine components — Button, Field, the radio group, Card, Notice, the status
-states, Badge, Dialog, Tabs — the tokens and the base layer. It ships no JavaScript and has no build.
+Version 0.2 holds ten components — Button, Field, the radio group, Card, Notice, the status
+states, Badge, Dialog, Tabs, Prose — the tokens and the base layer. It ships no JavaScript and has no build.
 
 ## What ships
 
@@ -84,6 +84,18 @@ The files are the documentation of the markup; this section gives their rules, n
   carry it, and the text carries the meaning.
 - **The dialog's head and foot are `div`s.** A `header` or `footer` would be read as a page
   landmark; html-validate's `unique-landmark` reports it.
+- **Prose's scroll wrapper is a named `group`, not a `region`.** html-validate fails a `region`
+  twice: `prefer-native-element` maps it to `section`, and `unique-landmark` fails two that share
+  an `aria-label`. Every `table` and `pre` sits alone in
+  `<div class="zl-prose__scroll" role="group" tabindex="0" aria-label="Table|Code block">`, and
+  the wrapper always has `tabindex="0"`: the binding never drops it, so its markup never differs
+  from the contract.
+- **`.zl-prose` styles classless descendants,** an exception to "every part has a `zl-` BEM
+  class": Markdown has no classes. Each selector wraps `.zl-prose` and any pseudo-class in
+  `:where()`, so a nested kit component keeps its own styles. Its first-and-last-child rules keep
+  `:first-child` outside `:where()`, as `.zl-card`'s do, so they outrank the descendant rules.
+  It sets `overflow-wrap: anywhere`, reset to `normal` on tables and, at zero specificity, on
+  nested kit components.
 - **Tabs' attributes are React Aria 3.53.1's** (`useTabList`, `useTab`, `useTabPanel`): the
   list has an `id`, the base React Aria builds the tab and panel ids from, which nothing refers
   to; only the selected tab has `aria-controls`; and the panel has `tabindex="0"` only when it
@@ -113,6 +125,7 @@ The files are the documentation of the markup; this section gives their rules, n
 | `dialog.html` | center, side, without foot                                                                              |
 | `tabs.html`   | text panel, panel with control                                                                          |
 | `radio.html`  | plain, checked, invalid, disabled                                                                       |
+| `prose.html`  | document, wide table, long code line                                                                    |
 
 The dialog's behaviour is the platform's: `showModal()` makes it modal, moves focus into it and
 returns focus to the opener on close, and Escape closes it. The kit adds the scroll lock, in CSS:
@@ -159,16 +172,17 @@ on exit. `ZELLIGE_BROWSER_PORT` moves the port from 3555.
 Two Playwright projects: `ui` (`tests/ui/`, Chromium) and `package` (`tests/integration/`, no
 browser).
 
-| Spec                  | What it proves                                                                                                                                                              |
-| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `page.spec.ts`        | The playground has one `h1`, one `main`, no skipped heading level, no repeated `id`; the theme switcher by keyboard                                                         |
-| `scan.spec.ts`        | axe under `WCAG_TAGS` in every theme, and with each dialog example open                                                                                                     |
-| `focus.spec.ts`       | Every element Tab reaches shows a 2px solid outline in `--zl-focus` at a 2px offset, in every theme                                                                         |
-| `layers.spec.ts`      | Each kit file, loaded alone and unprocessed, opens with the order and keeps every rule in its layer; `zl.css` imports every file in `css/`                                  |
-| `dialog.spec.ts`      | Per dialog example, by keyboard: focus lands on the frame, Tab follows the written order and stays in the dialog, the page does not scroll, Escape closes and focus returns |
-| `radio.spec.ts`       | A radio group is one Tab stop; Arrow Down moves to the next radio and checks it; Shift+Tab returns to the checked one                                                       |
-| `screenshots.spec.ts` | Each component alone in every theme, and each dialog example open                                                                                                           |
-| `package.spec.ts`     | `npm pack` ships exactly the four patterns, and each file resolves through `exports`                                                                                        |
+| Spec                  | What it proves                                                                                                                                                                      |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `page.spec.ts`        | The playground has one `h1`, one `main`, no skipped heading level, no repeated `id`; the theme switcher by keyboard                                                                 |
+| `scan.spec.ts`        | axe under `WCAG_TAGS` in every theme, and with each dialog example open                                                                                                             |
+| `focus.spec.ts`       | Every element Tab reaches shows a 2px solid outline in `--zl-focus` at a 2px offset, in every theme                                                                                 |
+| `layers.spec.ts`      | Each kit file, loaded alone and unprocessed, opens with the order and keeps every rule in its layer; `zl.css` imports every file in `css/`                                          |
+| `dialog.spec.ts`      | Per dialog example, by keyboard: focus lands on the frame, Tab follows the written order and stays in the dialog, the page does not scroll, Escape closes and focus returns         |
+| `radio.spec.ts`       | A radio group is one Tab stop; Arrow Down moves to the next radio and checks it; Shift+Tab returns to the checked one                                                               |
+| `prose.spec.ts`       | Heading sizes on a page of its own; zero edge margins in each example; nested components compute as outside prose; at 320 px no page scroll and the wrappers scroll, in every theme |
+| `screenshots.spec.ts` | Each component alone in every theme, and each dialog example open                                                                                                                   |
+| `package.spec.ts`     | `npm pack` ships exactly the four patterns, and each file resolves through `exports`                                                                                                |
 
 The datasets are read from the directories (`tests/ui/contract.ts`, the file lists in
 `layers.spec.ts` and `package.spec.ts`), so a new component file is new rows with no test edit.
@@ -194,4 +208,4 @@ range and dev dependency and proves the pair with its contract test. Adding a cl
 - WebKit is not run, so nothing here proves the kit on iPhones, where one of those applications
   is used.
 - Nothing is published to the private registry; installs are over git at a tag.
-- No screen reader, 200% zoom or 320 px viewport has been tried.
+- No screen reader or 200% zoom has been tried. The 320 px viewport is checked for prose only.
