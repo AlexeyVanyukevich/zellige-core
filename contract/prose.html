@@ -1,0 +1,98 @@
+<!-- example: document -->
+<div class="zl-prose">
+  <h4>Booking a cabin</h4>
+  <p>
+    A <strong>confirmed</strong> booking holds the cabin for the <em>whole</em> stay. Check the
+    <code>arrival</code> date first, then read the
+    <a href="https://example.com/cabins/north/booking-terms/2026/winter/cancellation-and-refunds"
+      >https://example.com/cabins/north/booking-terms/2026/winter/cancellation-and-refunds</a
+    >.
+  </p>
+  <h5>Before you arrive</h5>
+  <ul>
+    <li>Pack warm clothes</li>
+    <li>
+      Bring food for the stay
+      <ul>
+        <li>Dry goods</li>
+        <li>Fresh produce</li>
+      </ul>
+    </li>
+    <li>Tell the owner when you will arrive</li>
+  </ul>
+  <h6>Steps</h6>
+  <ol>
+    <li>Choose the dates</li>
+    <li>Confirm the guests</li>
+    <li>Pay the deposit</li>
+  </ol>
+  <blockquote>
+    <p>The stove burns best with dry birch.</p>
+  </blockquote>
+  <hr />
+  <div class="zl-prose__scroll" role="group" tabindex="0" aria-label="Table">
+    <table>
+      <thead>
+        <tr>
+          <th>Cabin</th>
+          <th>Beds</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>North</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>South</td>
+          <td>2</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="zl-prose__scroll" role="group" tabindex="0" aria-label="Code block">
+    <pre><code>const cabin = book('north', '2026-12-24')
+console.log(cabin.status)</code></pre>
+  </div>
+  <p>That is all.</p>
+</div>
+
+<!-- example: wide-table -->
+<div class="zl-prose">
+  <div class="zl-prose__scroll" role="group" tabindex="0" aria-label="Table">
+    <table>
+      <thead>
+        <tr>
+          <th>Requirement</th>
+          <th>Description</th>
+          <th>Responsible</th>
+          <th>Milestone</th>
+          <th>Estimate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Authentication</td>
+          <td>Registration</td>
+          <td>Backend-team</td>
+          <td>Milestone-one</td>
+          <td>Two-weeks</td>
+        </tr>
+        <tr>
+          <td>Authorisation</td>
+          <td>Permissions</td>
+          <td>Platform-team</td>
+          <td>Milestone-two</td>
+          <td>Three-weeks</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- example: long-code-line -->
+<div class="zl-prose">
+  <div class="zl-prose__scroll" role="group" tabindex="0" aria-label="Code block">
+    <pre><code>const reservation = await bookings.reserve({ cabin: 'north', arrival: '2026-12-24', nights: 7, guests: 4 })</code></pre>
+  </div>
+</div>
