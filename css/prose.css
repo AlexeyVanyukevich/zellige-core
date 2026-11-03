@@ -1,0 +1,162 @@
+@layer zl.tokens, zl.base, zl.components;
+
+/* Markdown has no classes, so prose styles the elements inside `.zl-prose`. Every selector that
+   reaches one wraps `.zl-prose` and any pseudo-class in `:where()`: the rules add no
+   specificity, and a kit component nested in prose keeps its own styles. */
+@layer zl.components {
+  .zl-prose {
+    /* `anywhere`, not `break-word`: only `anywhere` lowers the min-content width, so a long
+       URL cannot widen an ancestor. */
+    overflow-wrap: anywhere;
+  }
+
+  :where(.zl-prose) :is(h1, h2, h3, h4, h5, h6) {
+    margin-block: var(--zl-space-4) var(--zl-space-2);
+    font-weight: 600;
+    line-height: calc(var(--zl-leading) * 0.8);
+  }
+
+  :where(.zl-prose) :is(h1, h2, h3) {
+    margin-block-start: var(--zl-space-5);
+  }
+
+  :where(.zl-prose) h1 {
+    font-size: calc(var(--zl-text) * 1.6);
+  }
+
+  :where(.zl-prose) h2 {
+    font-size: calc(var(--zl-text) * 1.4);
+  }
+
+  :where(.zl-prose) h3 {
+    font-size: calc(var(--zl-text) * 1.25);
+  }
+
+  :where(.zl-prose) h4 {
+    font-size: calc(var(--zl-text) * 1.125);
+  }
+
+  :where(.zl-prose) h5 {
+    font-size: var(--zl-text);
+  }
+
+  :where(.zl-prose) h6 {
+    font-size: var(--zl-text-sm);
+  }
+
+  :where(.zl-prose) :is(p, ul, ol, blockquote) {
+    margin-block: 0 var(--zl-space-3);
+  }
+
+  :where(.zl-prose) :is(ul, ol) {
+    padding-inline-start: var(--zl-space-5);
+  }
+
+  :where(.zl-prose) li + li {
+    margin-block-start: var(--zl-space-1);
+  }
+
+  :where(.zl-prose) li > :is(ul, ol) {
+    margin-block: var(--zl-space-1) 0;
+  }
+
+  :where(.zl-prose) hr {
+    margin-block: var(--zl-space-5);
+    border: 0;
+    border-block-start: 1px solid var(--zl-line);
+  }
+
+  /* Links are underlined in every state: colour is never their only mark. */
+  :where(.zl-prose) a {
+    color: var(--zl-accent);
+    text-decoration: underline;
+  }
+
+  :where(.zl-prose) a:where(:hover) {
+    color: var(--zl-accent-strong);
+  }
+
+  :where(.zl-prose) code {
+    padding-inline: var(--zl-space-1);
+    border-radius: var(--zl-radius-sm);
+    background: var(--zl-surface-sunk);
+    color: var(--zl-ink);
+    font-family: var(--zl-font-mono);
+    font-size: 0.9em;
+  }
+
+  /* A block of code does not wrap and does not scroll itself: its wrapper scrolls. It is at
+     least as wide as its longest line, so its background reaches the end of it. */
+  :where(.zl-prose) pre {
+    min-inline-size: max-content;
+    margin: 0;
+    padding: var(--zl-space-3);
+    border: 1px solid var(--zl-line);
+    border-radius: var(--zl-radius-sm);
+    background: var(--zl-surface-sunk);
+    font-family: var(--zl-font-mono);
+    font-size: var(--zl-text-sm);
+    line-height: var(--zl-leading);
+    white-space: pre;
+  }
+
+  :where(.zl-prose) pre code {
+    padding: 0;
+    background: none;
+    font-size: inherit;
+  }
+
+  :where(.zl-prose) blockquote {
+    margin-inline: 0;
+    padding-inline-start: var(--zl-space-4);
+    border-inline-start: var(--zl-space-1) solid var(--zl-line-strong);
+    color: var(--zl-ink-soft);
+  }
+
+  :where(.zl-prose) blockquote > :where(:last-child) {
+    margin-block-end: 0;
+  }
+
+  /* A table keeps its words whole and scrolls in its wrapper: with `anywhere` its cells would
+     shrink to fit instead. */
+  :where(.zl-prose) table {
+    margin: 0;
+    border-collapse: collapse;
+    overflow-wrap: normal;
+  }
+
+  :where(.zl-prose) :is(th, td) {
+    padding: var(--zl-space-2) var(--zl-space-3);
+    border: 1px solid var(--zl-line);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  :where(.zl-prose) th {
+    background: var(--zl-surface-sunk);
+    font-weight: 600;
+  }
+
+  /* The wrapper of every table and code block. Its focus indicator is the base layer's. */
+  .zl-prose__scroll {
+    margin-block: 0 var(--zl-space-3);
+    overflow-x: auto;
+    contain: inline-size;
+  }
+
+  /* `overflow-wrap` is inherited: a nested kit component would wrap where it does not outside. */
+  :where(.zl-prose [class^='zl-'], .zl-prose [class*=' zl-']) {
+    overflow-wrap: normal;
+  }
+
+  /* As in `.zl-card`: prose's own padding-free edges collapse into nothing. The pseudo-class
+     stays outside `:where()`, so these outrank the descendant rules above. They come last, to
+     win their tie with `.zl-prose__scroll`. */
+  :where(.zl-prose) > :first-child {
+    margin-block-start: 0;
+  }
+
+  :where(.zl-prose) > :last-child {
+    margin-block-end: 0;
+  }
+}
