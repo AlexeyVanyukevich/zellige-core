@@ -70,9 +70,22 @@
     border-color: var(--zl-ink-faint);
   }
 
-  /* Shown by the border and by the error's text, which the control names in aria-describedby. */
-  :is(.zl-input, .zl-select, .zl-textarea)[aria-invalid='true'] {
+  /*
+   * An invalid control shows by its danger border while not focused, by a danger ring while
+   * focused, and by the error's text in both, which the control names in aria-describedby.
+   * Focused, the border goes back to neutral so one ring shows, not a ring outside a border.
+   * The invalid hover selector, at (0,4,0), outranks the valid hover rule's (0,3,0), so a
+   * hovered invalid control keeps the danger border.
+   */
+  :is(.zl-input, .zl-select, .zl-textarea)[aria-invalid='true'],
+  :is(.zl-input, .zl-select, .zl-textarea)[aria-invalid='true']:hover:not(:disabled) {
     border-color: var(--zl-danger);
+  }
+
+  :is(.zl-input, .zl-select, .zl-textarea)[aria-invalid='true']:focus-visible,
+  :is(.zl-input, .zl-select, .zl-textarea)[aria-invalid='true']:focus-visible:hover:not(:disabled) {
+    border-color: var(--zl-line-strong);
+    outline-color: var(--zl-danger);
   }
 
   :is(.zl-input, .zl-select, .zl-textarea):disabled {
