@@ -1,6 +1,6 @@
 # Checkbox — design
 
-Status: **approved**, 2026-11-18; becomes **built** when the slice ships.
+Status: **built**, 2026-11-18; approved and designed 2026-11-18.
 
 > **This becomes a decision record once the slice ships.**
 >

@@ -13,7 +13,7 @@ Roles used below:
 - **An application** — anything that installs the kit and themes it. Its theme file and the
   scans that hold it to WCAG 2.2 AA live in the application, not here.
 
-Version 0.2 holds ten components — Button, Field, the radio group, Card, Notice, the status
+Version 0.2 holds eleven components — Button, Field, the radio group, the checkbox, Card, Notice, the status
 states, Badge, Dialog, Tabs, Prose — the tokens and the base layer. It ships no JavaScript and has no build.
 
 ## What ships
@@ -112,23 +112,31 @@ The files are the documentation of the markup; this section gives their rules, n
   coloured by `accent-color` and sized from the label's font. Its keyboard model is the
   platform's, which React Aria repeats: one Tab stop, the arrow keys move and check. Each
   example's `name` is its `id`, so no two examples on the playground form one group.
+- **The checkbox's attributes are React Aria 3.53.1's** (`useCheckbox`, `useToggleState`), read
+  after mount: a native input with `tabindex="0"` unless disabled; the hooks' `descriptionProps`
+  and `errorMessageProps` make the input described by the description, then the error. React
+  Aria's `data-react-aria-pressable` is left out, as on the radio group. The description and error
+  sit beside the `<label>`, so the name is the label's text alone; the input is the platform's,
+  visible, coloured by `accent-color`. An invalid checkbox draws a 2px `--zl-danger` rule along its
+  wrapper's inline start; its focus ring stays `--zl-focus`.
 - **The radio group has no gap between its radios**: each row is a tap high, and an invalid
   group's danger rule runs down them unbroken. Its label, description and error keep a small
   margin.
 - **The kit's own text** is `Close`, `Retry` and `Loading…`.
 
-| File          | Examples                                                                                                |
-| ------------- | ------------------------------------------------------------------------------------------------------- |
-| `button.html` | neutral, primary, quiet, danger, disabled, busy, link                                                   |
-| `field.html`  | input, select, textarea alone; a field with a hint, an error, both; with a select, a textarea; disabled |
-| `card.html`   | card                                                                                                    |
-| `notice.html` | info, danger, title only                                                                                |
-| `status.html` | empty, loading, trouble, trouble without retry                                                          |
-| `badge.html`  | neutral, accent, success, warning, danger                                                               |
-| `dialog.html` | center, side, without foot                                                                              |
-| `tabs.html`   | text panel, panel with control                                                                          |
-| `radio.html`  | plain, checked, invalid, disabled                                                                       |
-| `prose.html`  | document, wide table, long code line                                                                    |
+| File            | Examples                                                                                                |
+| --------------- | ------------------------------------------------------------------------------------------------------- |
+| `button.html`   | neutral, primary, quiet, danger, disabled, busy, link                                                   |
+| `field.html`    | input, select, textarea alone; a field with a hint, an error, both; with a select, a textarea; disabled |
+| `card.html`     | card                                                                                                    |
+| `notice.html`   | info, danger, title only                                                                                |
+| `status.html`   | empty, loading, trouble, trouble without retry                                                          |
+| `badge.html`    | neutral, accent, success, warning, danger                                                               |
+| `dialog.html`   | center, side, without foot                                                                              |
+| `tabs.html`     | text panel, panel with control                                                                          |
+| `radio.html`    | plain, checked, invalid, disabled                                                                       |
+| `checkbox.html` | plain, checked, described, invalid, disabled                                                            |
+| `prose.html`    | document, wide table, long code line                                                                    |
 
 The dialog's behaviour is the platform's: `showModal()` makes it modal, moves focus into it and
 returns focus to the opener on close, and Escape closes it. The kit adds the scroll lock, in CSS:
@@ -184,6 +192,7 @@ browser).
 | `layers.spec.ts`      | Each kit file, loaded alone and unprocessed, opens with the order and keeps every rule in its layer; `zl.css` imports every file in `css/`                                                                              |
 | `dialog.spec.ts`      | Per dialog example, by keyboard: focus lands on the frame, Tab follows the written order and stays in the dialog, the page does not scroll, Escape closes and focus returns                                             |
 | `radio.spec.ts`       | A radio group is one Tab stop; Arrow Down moves to the next radio and checks it; Shift+Tab returns to the checked one                                                                                                   |
+| `checkbox.spec.ts`    | A checkbox is one Tab stop and Space toggles it; Tab skips the disabled one; names and descriptions by role; the invalid rule and the disabled label's colour, in every theme                                           |
 | `prose.spec.ts`       | Heading sizes on a page of its own; zero edge margins in each example; nested components compute as outside prose; at 320 px no page scroll and the wrappers scroll, in every theme                                     |
 | `screenshots.spec.ts` | Each component alone in every theme, and each dialog example open                                                                                                                                                       |
 | `package.spec.ts`     | `npm pack` ships exactly the four patterns, and each file resolves through `exports`                                                                                                                                    |
