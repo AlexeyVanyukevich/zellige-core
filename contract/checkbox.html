@@ -1,0 +1,53 @@
+<!-- example: plain -->
+<div class="zl-checkbox">
+  <label class="zl-checkbox__label">
+    <input class="zl-checkbox__input" type="checkbox" tabindex="0" />
+    Remember me
+  </label>
+</div>
+
+<!-- example: checked -->
+<div class="zl-checkbox">
+  <label class="zl-checkbox__label">
+    <input class="zl-checkbox__input" type="checkbox" checked tabindex="0" />
+    Send receipts
+  </label>
+</div>
+
+<!-- example: described -->
+<div class="zl-checkbox">
+  <label class="zl-checkbox__label">
+    <input
+      class="zl-checkbox__input"
+      type="checkbox"
+      aria-describedby="checkbox-described-description"
+      tabindex="0"
+    />
+    Send the digest
+  </label>
+  <p class="zl-checkbox__description" id="checkbox-described-description">Once a week</p>
+</div>
+
+<!-- example: invalid -->
+<div class="zl-checkbox">
+  <label class="zl-checkbox__label">
+    <input
+      class="zl-checkbox__input"
+      type="checkbox"
+      aria-describedby="checkbox-invalid-description checkbox-invalid-error"
+      aria-invalid="true"
+      tabindex="0"
+    />
+    Accept the terms
+  </label>
+  <p class="zl-checkbox__description" id="checkbox-invalid-description">Read the terms first</p>
+  <p class="zl-checkbox__error" id="checkbox-invalid-error">Accept the terms to continue</p>
+</div>
+
+<!-- example: disabled -->
+<div class="zl-checkbox">
+  <label class="zl-checkbox__label">
+    <input class="zl-checkbox__input" type="checkbox" disabled />
+    Archive on close
+  </label>
+</div>
