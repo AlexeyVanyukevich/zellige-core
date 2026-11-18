@@ -13,7 +13,7 @@ Roles used below:
 - **An application** — anything that installs the kit and themes it. Its theme file and the
   scans that hold it to WCAG 2.2 AA live in the application, not here.
 
-Version 0.4 holds eleven components — Button, Field, the radio group, the checkbox, Card, Notice, the status
+Version 0.4.0 holds eleven components — Button, Field, the radio group, the checkbox, Card, Notice, the status
 states, Badge, Dialog, Tabs, Prose — the tokens and the base layer. It ships no JavaScript and has no build.
 
 ## What ships
@@ -197,9 +197,11 @@ browser).
 | `prose.spec.ts`       | Heading sizes on a page of its own; zero edge margins in each example; nested components compute as outside prose; at 320 px no page scroll and the wrappers scroll, in every theme                                                                                                    |
 | `screenshots.spec.ts` | Each component alone in every theme, and each dialog example open                                                                                                                                                                                                                      |
 | `package.spec.ts`     | `npm pack` ships exactly the four patterns, and each file resolves through `exports`                                                                                                                                                                                                   |
+| `release.spec.ts`     | Every file in `charter.json`'s `release.files` holds the version `package.json` holds                                                                                                                                                                                                  |
 
 The datasets are read from the directories (`tests/ui/contract.ts`, the file lists in
 `layers.spec.ts` and `package.spec.ts`), so a new component file is new rows with no test edit.
+The rows of `release.spec.ts` come from `release.files` in `charter.json`.
 Only the dialog's tab order is written by hand, and a test fails if an example lacks one.
 
 `tests/ui/known.ts` lists accessibility failures left out of the scan, one selector in one theme
