@@ -13,7 +13,7 @@ Roles used below:
 - **An application** — anything that installs the kit and themes it. Its theme file and the
   scans that hold it to WCAG 2.2 AA live in the application, not here.
 
-Version 0.2 holds eleven components — Button, Field, the radio group, the checkbox, Card, Notice, the status
+Version 0.4 holds eleven components — Button, Field, the radio group, the checkbox, Card, Notice, the status
 states, Badge, Dialog, Tabs, Prose — the tokens and the base layer. It ships no JavaScript and has no build.
 
 ## What ships
