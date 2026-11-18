@@ -1,9 +1,9 @@
 # @zellige/core
 
 Design tokens, CSS and reference markup for the zellige component kit: Button, Field, Radio
-group, Checkbox, Card, Notice, Empty / Loading / Trouble, Badge, Dialog and Tabs. No JavaScript and no
-framework. The React binding, `@zellige/react`, renders the same markup and lives in its own
-repository.
+group, Checkbox, Card, Notice, Empty / Loading / Trouble, Badge, Dialog, Tabs and Prose. No
+JavaScript and no framework. The React binding, `@zellige/react`, renders the same markup and lives
+in its own repository.
 
 How the kit is built, and why it is shaped as it is: [`docs/architecture.md`](docs/architecture.md).
 
@@ -29,7 +29,10 @@ or one component at a time, `@zellige/core/css/button.css`, after `css/base.css`
 Write the markup in `contract/<component>.html`, which shows every variant and state. States are
 attributes, not classes: `disabled`, `aria-invalid="true"`, `aria-busy="true"`,
 `aria-selected="true"`. A dialog opens with `showModal()`; Tabs needs a binding for its
-behaviour.
+behaviour. Render Markdown inside a `.zl-prose` container and leave its elements without classes,
+but put each `table` and each `pre` alone in `<div class="zl-prose__scroll" role="group"
+tabindex="0" aria-label="Table">` (or `"Code block"`), which the CSS does not add, as
+`contract/prose.html` shows.
 
 ### Theming
 
