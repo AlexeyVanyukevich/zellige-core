@@ -2,8 +2,9 @@ import { expect, test } from '@playwright/test'
 import { type Ending, walk } from './walk'
 
 interface Expected {
+  role: 'button' | 'link'
   name: string
-  /** Which of the buttons sharing that name; the first by default. */
+  /** Which of the elements sharing that role and name; the first by default. */
   nth?: number
 }
 
@@ -15,7 +16,7 @@ interface Fixture {
   reached: Expected[]
   /** The endings the walk may have. */
   endings: Ending[]
-  /** The name of the element the ending names, when it names one. */
+  /** Text the label of the element the ending names contains, when it names one. */
   element?: string
 }
 
@@ -24,14 +25,21 @@ const FIXTURES: Fixture[] = [
     label: 'alike',
     html: '<button>Same</button><button>Same</button><a href="#end">Other</a>',
     limit: 10,
-    reached: [{ name: 'Same' }, { name: 'Same', nth: 1 }, { name: 'Other' }],
+    reached: [
+      { role: 'button', name: 'Same' },
+      { role: 'button', name: 'Same', nth: 1 },
+      { role: 'link', name: 'Other' },
+    ],
     endings: ['left', 'wrapped'],
   },
   {
     label: 'cap',
     html: '<button>One</button><button>Two</button><button>Three</button>',
     limit: 2,
-    reached: [{ name: 'One' }, { name: 'Two' }],
+    reached: [
+      { role: 'button', name: 'One' },
+      { role: 'button', name: 'Two' },
+    ],
     endings: ['cap'],
   },
   {
@@ -39,9 +47,23 @@ const FIXTURES: Fixture[] = [
     html: `<button>One</button><button>Two</button>
       <button onkeydown="if (event.key === 'Tab') { event.preventDefault(); document.querySelectorAll('button')[1].focus() }">Three</button>`,
     limit: 10,
-    reached: [{ name: 'One' }, { name: 'Two' }, { name: 'Three' }],
+    reached: [
+      { role: 'button', name: 'One' },
+      { role: 'button', name: 'Two' },
+      { role: 'button', name: 'Three' },
+    ],
     endings: ['repeated'],
     element: 'Two',
+  },
+  {
+    // While focus is inside the iframe, the page's focused element is the iframe itself, and in
+    // Chromium it does not match :focus-visible.
+    label: 'iframe',
+    html: '<button>One</button><iframe title="Frame" srcdoc="<button>Inner</button>"></iframe><button>After</button>',
+    limit: 10,
+    reached: [{ role: 'button', name: 'One' }],
+    endings: ['not-focus-visible'],
+    element: 'iframe',
   },
 ]
 
@@ -55,10 +77,7 @@ for (const fixture of FIXTURES) {
     expect(result.reached).toHaveLength(fixture.reached.length)
     for (const [index, expected] of fixture.reached.entries()) {
       const handle = await page
-        .getByRole(expected.name === 'Other' ? 'link' : 'button', {
-          name: expected.name,
-          exact: true,
-        })
+        .getByRole(expected.role, { name: expected.name, exact: true })
         .nth(expected.nth ?? 0)
         .elementHandle()
       const reached = result.reached[index]
