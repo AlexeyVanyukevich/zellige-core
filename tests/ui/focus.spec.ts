@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test'
 import { THEMES } from '../../playground/themes'
 import { openPlayground } from './playground'
+import { walk } from './walk'
 
 interface Indicator {
   name: string
@@ -37,14 +38,10 @@ for (const theme of THEMES) {
         .evaluate((control) => control.setAttribute('aria-invalid', 'true'))
     }
 
-    const seen: Indicator[] = []
-    for (let step = 0; step < 500; step++) {
-      await page.keyboard.press('Tab')
-      const indicator = await page.evaluate((): Indicator | null => {
-        const element = document.activeElement
-        if (!element || element === document.body || !element.matches(':focus-visible')) {
-          return null
-        }
+    // Reading happens in the page while the element is focused, so `name` is only a label.
+    const { reached, ending, element } = await walk(page, {
+      limit: 500,
+      read: (element): Omit<Indicator, 'name'> => {
         // A token resolved to a colour the way the outline resolves it: through a probe in the
         // same place, since the token itself is only text until something uses it.
         const resolve = (token: string): string => {
@@ -59,7 +56,6 @@ for (const theme of THEMES) {
         const invalid = field && element.getAttribute('aria-invalid') === 'true'
         const style = getComputedStyle(element)
         return {
-          name: element.outerHTML.slice(0, 80),
           style: style.outlineStyle,
           width: style.outlineWidth,
           offset: style.outlineOffset,
@@ -68,10 +64,14 @@ for (const theme of THEMES) {
           border: field ? style.borderTopColor : null,
           expectedBorder: field ? resolve('--zl-line-strong') : null,
         }
-      })
-      if (!indicator || seen.some(({ name }) => name === indicator.name)) break
-      seen.push(indicator)
-    }
+      },
+    })
+    // The walk must end at the end of the page; any other end hides the elements after it.
+    expect(
+      ['left', 'wrapped'],
+      `the walk ended ${ending}${element ? ` at ${element}` : ''} after ${reached.length} elements`,
+    ).toContain(ending)
+    const seen: Indicator[] = reached.map(({ label, value }) => ({ name: label, ...value }))
 
     expect(seen.length).toBeGreaterThan(0)
     expect(seen).toEqual(
