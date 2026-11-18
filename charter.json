@@ -5,6 +5,6 @@
   "backlog": "github",
   "release": {
     "verify": "./run check",
-    "files": ["README.md"]
+    "files": ["README.md", "docs/architecture.md"]
   }
 }
