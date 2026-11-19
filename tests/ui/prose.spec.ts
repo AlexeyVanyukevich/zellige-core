@@ -315,6 +315,10 @@ for (const theme of THEMES) {
     await page.evaluate(() => {
       location.hash = '#prose-footnotes-fn-1'
     })
+    // the note has no role or name to find it by, so the target is read by id
+    expect(await page.evaluate(() => document.querySelector(':target')?.id)).toBe(
+      'prose-footnotes-fn-1',
+    )
     expect((await new AxeBuilder({ page }).withTags(WCAG_TAGS).analyze()).violations).toEqual([])
   })
 }
