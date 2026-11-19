@@ -122,6 +122,8 @@ The files are the documentation of the markup; this section gives their rules, n
 - **The radio group has no gap between its radios**: each row is a tap high, and an invalid
   group's danger rule runs down them unbroken. Its label, description and error keep a small
   margin.
+- **A Field, a radio group and a checkbox keep their rows at content height, at the top**, when
+  a taller grid row stretches them.
 - **The kit's own text** is `Close`, `Retry` and `Loading…`.
 
 | File            | Examples                                                                                                |
@@ -195,6 +197,7 @@ browser).
 | `radio.spec.ts`       | A radio group is one Tab stop; Arrow Down moves to the next radio and checks it; Shift+Tab returns to the checked one                                                                                                                                                                  |
 | `checkbox.spec.ts`    | A checkbox is one Tab stop and Space toggles it; Tab skips the disabled one; names and descriptions by role; the invalid rule and the disabled label's colour, in every theme                                                                                                          |
 | `prose.spec.ts`       | Heading sizes on a page of its own; zero edge margins in each example; nested components compute as outside prose; at 320 px no page scroll and the wrappers scroll, in every theme                                                                                                    |
+| `layout.spec.ts`      | A Field, radio group and checkbox stretched to a taller grid row keep each child at its content offset and height                                                                                                                                                                      |
 | `screenshots.spec.ts` | Each component alone in every theme, and each dialog example open                                                                                                                                                                                                                      |
 | `package.spec.ts`     | `npm pack` ships exactly the four patterns, and each file resolves through `exports`                                                                                                                                                                                                   |
 | `release.spec.ts`     | Every file in `charter.json`'s `release.files` holds the version `package.json` holds                                                                                                                                                                                                  |
