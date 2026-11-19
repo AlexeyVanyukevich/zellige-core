@@ -21,7 +21,7 @@ export const HEADINGS: HeadingRow[] = [
 ]
 
 /** The contract's examples, in order, each one `.zl-prose`. */
-export const EXAMPLES: string[] = ['document', 'wide-table', 'long-code-line']
+export const EXAMPLES: string[] = ['document', 'wide-table', 'long-code-line', 'footnotes']
 
 export interface NestedRow {
   name: string
@@ -55,4 +55,45 @@ export interface WrapperRow {
 export const WRAPPERS: WrapperRow[] = [
   { example: 'wide-table', name: 'Table' },
   { example: 'long-code-line', name: 'Code block' },
+]
+
+export interface ReferenceRow {
+  name: string
+  id: string
+}
+
+/** The footnote references of the `footnotes` example, in document order. */
+export const REFERENCES: ReferenceRow[] = [
+  { name: 'Footnote 1', id: 'prose-footnotes-fnref-1' },
+  { name: 'Footnote 2', id: 'prose-footnotes-fnref-2' },
+  { name: 'Footnote 1', id: 'prose-footnotes-fnref-1-2' },
+]
+
+export interface BackLinkRow {
+  name: string
+  href: string
+  /** The note's `li` id the link sits in. */
+  note: string
+  sup: boolean
+}
+
+export const BACK_LINKS: BackLinkRow[] = [
+  {
+    name: 'Back to reference 1',
+    href: '#prose-footnotes-fnref-1',
+    note: 'prose-footnotes-fn-1',
+    sup: false,
+  },
+  {
+    name: 'Back to reference 1-2',
+    href: '#prose-footnotes-fnref-1-2',
+    note: 'prose-footnotes-fn-1',
+    sup: true,
+  },
+  {
+    name: 'Back to reference 2',
+    href: '#prose-footnotes-fnref-2',
+    note: 'prose-footnotes-fn-2',
+    sup: false,
+  },
 ]

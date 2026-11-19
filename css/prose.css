@@ -144,9 +144,43 @@
     contain: inline-size;
   }
 
-  /* `overflow-wrap` is inherited: a nested kit component would wrap where it does not outside. */
+  /* A raised, small reference that leaves its line's height alone. */
+  :where(.zl-prose) sup {
+    line-height: 0;
+    font-size: 0.75em;
+    vertical-align: super;
+  }
+
+  /* The notes block: ruled off from the text, in smaller type, ending without a margin. */
+  .zl-prose__footnotes {
+    margin-block: var(--zl-space-5) 0;
+    padding-block-start: var(--zl-space-3);
+    border-block-start: 1px solid var(--zl-line);
+    font-size: var(--zl-text-sm);
+  }
+
+  .zl-prose__footnotes > ol {
+    margin-block-end: 0;
+  }
+
+  .zl-prose__footnotes li > :where(:last-child) {
+    margin-block-end: 0;
+  }
+
+  /* The note a followed reference points at; no other note has a background. */
+  .zl-prose__footnotes li:where(:target) {
+    background: var(--zl-surface-sunk);
+  }
+
+  /* `overflow-wrap` is inherited: a nested kit component would wrap where it does not outside.
+     The notes block is prose's own, so it keeps the wrapping. */
   :where(.zl-prose [class^='zl-'], .zl-prose [class*=' zl-']) {
     overflow-wrap: normal;
+  }
+
+  .zl-prose__footnotes,
+  .zl-prose__footnotes li {
+    overflow-wrap: anywhere;
   }
 
   /* As in `.zl-card`: prose's own padding-free edges collapse into nothing. The pseudo-class

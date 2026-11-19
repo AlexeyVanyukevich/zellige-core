@@ -96,3 +96,51 @@ console.log(cabin.status)</code></pre>
     <pre><code>const reservation = await bookings.reserve({ cabin: 'north', arrival: '2026-12-24', nights: 7, guests: 4 })</code></pre>
   </div>
 </div>
+
+<!-- example: footnotes -->
+<div class="zl-prose">
+  <p>
+    A cabin holds four guests.<sup
+      ><a href="#prose-footnotes-fn-1" id="prose-footnotes-fnref-1" aria-label="Footnote 1"
+        >1</a
+      ></sup
+    >
+    The stove needs dry birch.<sup
+      ><a href="#prose-footnotes-fn-2" id="prose-footnotes-fnref-2" aria-label="Footnote 2"
+        >2</a
+      ></sup
+    >
+  </p>
+  <p>
+    Booking closes in March.<sup
+      ><a href="#prose-footnotes-fn-1" id="prose-footnotes-fnref-1-2" aria-label="Footnote 1"
+        >1</a
+      ></sup
+    >
+  </p>
+  <section class="zl-prose__footnotes">
+    <h4 class="zl-visually-hidden">Footnotes</h4>
+    <ol>
+      <li id="prose-footnotes-fn-1">
+        <p>
+          The owner sets the limit.
+          <a href="#prose-footnotes-fnref-1" aria-label="Back to reference 1">↩︎</a>
+          <a href="#prose-footnotes-fnref-1-2" aria-label="Back to reference 1-2">↩︎<sup>2</sup></a>
+        </p>
+      </li>
+      <li id="prose-footnotes-fn-2">
+        <p>
+          Read
+          <a
+            href="https://example.com/cabins/north/stove-care/2026/winter/dry-birch-and-chimney-sweeping"
+            >https://example.com/cabins/north/stove-care/2026/winter/dry-birch-and-chimney-sweeping</a
+          >.
+        </p>
+        <p>
+          Split the logs in autumn.
+          <a href="#prose-footnotes-fnref-2" aria-label="Back to reference 2">↩︎</a>
+        </p>
+      </li>
+    </ol>
+  </section>
+</div>
