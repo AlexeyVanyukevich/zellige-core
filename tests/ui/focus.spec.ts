@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test'
 import { THEMES } from '../../playground/themes'
+import { openFixture } from './fixture'
 import { openPlayground } from './playground'
 import { walk } from './walk'
 
@@ -46,7 +47,9 @@ for (const theme of THEMES) {
         // same place, since the token itself is only text until something uses it.
         const resolve = (token: string): string => {
           const probe = document.createElement('span')
-          probe.style.color = `var(${token})`
+          // `--zl-focus` is read as `css/base.css` reads it, with the accent in force as fallback.
+          probe.style.color =
+            token === '--zl-focus' ? 'var(--zl-focus, var(--zl-accent))' : `var(${token})`
           element.parentElement?.append(probe)
           const colour = getComputedStyle(probe).color
           probe.remove()
@@ -89,4 +92,69 @@ for (const theme of THEMES) {
     // The walk reaches an invalid input, select and textarea, and valid ones too.
     expect(seen.filter(({ border }) => border !== null).length).toBeGreaterThanOrEqual(5)
   })
+}
+
+interface ReThemeRow {
+  name: string
+  /** Unlayered CSS after the theme; `.region` wraps the button. */
+  style: string
+  /** A plain colour, or the literal `page-accent` for the page's `--zl-accent` when nothing re-themes the button. */
+  expected: string
+}
+
+// Colours distinct from every theme's accent.
+const PINK = '#ff00aa'
+const CYAN = '#00aaff'
+
+const RE_THEME: readonly ReThemeRow[] = [
+  { name: 'nothing re-themed', style: '', expected: 'page-accent' },
+  {
+    name: 'an ancestor sets only --zl-accent',
+    style: `.region { --zl-accent: ${PINK} }`,
+    expected: PINK,
+  },
+  {
+    name: 'the button sets --zl-accent',
+    style: `.zl-button { --zl-accent: ${PINK} }`,
+    expected: PINK,
+  },
+  {
+    name: 'an ancestor sets --zl-accent and --zl-focus',
+    style: `.region { --zl-accent: ${PINK}; --zl-focus: ${CYAN} }`,
+    expected: CYAN,
+  },
+  {
+    name: ':root sets --zl-focus and an ancestor sets only --zl-accent',
+    style: `:root { --zl-focus: ${CYAN} } .region { --zl-accent: ${PINK} }`,
+    expected: CYAN,
+  },
+  {
+    name: 'the button sets --zl-focus and an ancestor sets only --zl-accent',
+    style: `.region { --zl-accent: ${PINK} } .zl-button { --zl-focus: ${CYAN} }`,
+    expected: CYAN,
+  },
+]
+
+for (const theme of THEMES) {
+  for (const row of RE_THEME) {
+    test(`the focus ring follows a re-themed accent: ${row.name}, ${theme.label}`, async ({
+      page,
+    }) => {
+      await openFixture(
+        page,
+        '<span id="probe"></span><div class="region"><button type="button" class="zl-button">Save</button></div>',
+        { theme, style: row.style },
+      )
+      await page.keyboard.press('Tab')
+      const button = page.getByRole('button', { name: 'Save' })
+      await expect(button).toBeFocused()
+      const expected = await page.evaluate((colour) => {
+        const probe = document.getElementById('probe') as HTMLElement
+        probe.style.color = colour === 'page-accent' ? 'var(--zl-accent)' : colour
+        return getComputedStyle(probe).color
+      }, row.expected)
+      const ring = await button.evaluate((el) => getComputedStyle(el).outlineColor)
+      expect(ring).toBe(expected)
+    })
+  }
 }
