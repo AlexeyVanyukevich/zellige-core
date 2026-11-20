@@ -221,6 +221,12 @@
     overflow-wrap: anywhere;
   }
 
+  /* An image never outgrows its prose; a table's own cells keep their size and scroll. */
+  :where(.zl-prose) img:where(:not(.zl-prose :is(td, th) img)) {
+    max-inline-size: 100%;
+    block-size: auto;
+  }
+
   /* As in `.zl-card`: prose's own padding-free edges collapse into nothing. The pseudo-class
      stays outside `:where()`, so these outrank the descendant rules above. They come last, to
      win their tie with `.zl-prose__scroll`. */

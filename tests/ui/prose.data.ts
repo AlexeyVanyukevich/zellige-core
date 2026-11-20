@@ -126,3 +126,26 @@ export const TASK_LISTS: string[] = ['UL', 'UL', 'OL']
 /** Text long enough to wrap in a 200px container, with inline code. */
 export const LONG_STEP =
   'Check the <code>arrival</code> date, then bring dry firewood and warm clothes for every guest'
+
+export interface ImageRow {
+  name: string
+  where: 'paragraph' | 'table cell' | 'layout table cell'
+  width: number
+  height: number
+  /** `container`: the image is as wide as the prose content; `own`: it keeps its attributes. */
+  renders: 'container' | 'own'
+}
+
+/** Where an image sits in prose, and the size it renders at in a 320px viewport. */
+export const IMAGES: ImageRow[] = [
+  { name: 'a wide image', where: 'paragraph', width: 800, height: 400, renders: 'container' },
+  { name: 'a narrow image', where: 'paragraph', width: 100, height: 50, renders: 'own' },
+  { name: 'a table-cell image', where: 'table cell', width: 800, height: 400, renders: 'own' },
+  {
+    name: 'a layout-table image',
+    where: 'layout table cell',
+    width: 800,
+    height: 400,
+    renders: 'container',
+  },
+]

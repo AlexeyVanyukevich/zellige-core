@@ -7,6 +7,7 @@ import {
   BACK_LINKS,
   EXAMPLES,
   HEADINGS,
+  IMAGES,
   LONG_STEP,
   NESTED,
   REFERENCES,
@@ -683,3 +684,53 @@ test('a plain item holding a nested task list keeps its bullet', async ({ page }
     ),
   ).toBe('disc')
 })
+
+for (const row of IMAGES) {
+  test(`${row.name} in prose (${row.where}) renders at the size its place allows`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 320, height: 800 })
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${row.width}" height="${row.height}"></svg>`
+    const img = `<img id="pic" alt="" width="${row.width}" height="${row.height}" src="data:image/svg+xml,${encodeURIComponent(svg)}">`
+    const table = `<div class="zl-prose__scroll" role="group" tabindex="0" aria-label="Table"><table><thead><tr><th>A</th></tr></thead><tbody><tr><td>${img}</td></tr></tbody></table></div>`
+    const body = {
+      paragraph: `<div class="zl-prose" id="prose"><p>${img}</p></div>`,
+      'table cell': `<div class="zl-prose" id="prose">${table}</div>`,
+      'layout table cell': `<table><tbody><tr><td><div class="zl-prose" id="prose"><p>${img}</p></div></td></tr></tbody></table>`,
+    }[row.where]
+    await openFixture(page, body)
+    await page.evaluate(() => (document.getElementById('pic') as HTMLImageElement).decode())
+
+    const m = await page.evaluate(() => {
+      const pic = document.getElementById('pic') as HTMLElement
+      const prose = document.getElementById('prose') as HTMLElement
+      const style = getComputedStyle(prose)
+      const box = pic.getBoundingClientRect()
+      const group = document.querySelector('[aria-label="Table"]')
+      const root = document.documentElement
+      return {
+        w: box.width,
+        h: box.height,
+        content: prose.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight),
+        client: root.clientWidth,
+        pageScroll: root.scrollWidth,
+        groupScroll: group?.scrollWidth ?? 0,
+        groupClient: group?.clientWidth ?? 0,
+      }
+    })
+
+    const width = row.renders === 'container' ? m.content : row.width
+    expect(m.w).toBeCloseTo(width, 0)
+    expect(m.h).toBeCloseTo((width * row.height) / row.width, 0)
+    expect(m.pageScroll).toBeLessThanOrEqual(m.client)
+    if (row.where === 'table cell') expect(m.groupScroll).toBeGreaterThan(m.groupClient)
+    if (row.where === 'layout table cell') expect(m.w).toBeLessThanOrEqual(m.client)
+    if (row.name === 'a wide image') {
+      await page.evaluate(() => {
+        document.documentElement.setAttribute('lang', 'en')
+        document.title = 'Fixture'
+      })
+      expect((await new AxeBuilder({ page }).withTags(WCAG_TAGS).analyze()).violations).toEqual([])
+    }
+  })
+}
