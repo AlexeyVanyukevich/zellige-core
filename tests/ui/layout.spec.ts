@@ -5,7 +5,7 @@ import { LAYOUTS } from './layout.data'
 const GRID = 'display: grid; grid-template-columns: 20rem 20rem; margin-block-end: 1rem'
 
 for (const row of LAYOUTS) {
-  test(`a ${row.component} stretched to a taller grid row keeps its children at content height, at the top`, async ({
+  test(`${row.component} stretched to a taller grid row keeps its children at content height, aligned ${row.alignment}`, async ({
     page,
   }) => {
     await openFixture(
@@ -35,6 +35,16 @@ for (const row of LAYOUTS) {
 
     expect(stretched.height).toBeGreaterThan(lone.height)
     expect(lone.children.length).toBeGreaterThanOrEqual(2)
-    expect(stretched.children).toEqual(lone.children)
+    if (row.alignment === 'start') {
+      expect(stretched.children).toEqual(lone.children)
+      return
+    }
+    const shift = (stretched.height - lone.height) / 2
+    expect(stretched.children).toHaveLength(lone.children.length)
+    lone.children.forEach((child, index) => {
+      const spread = stretched.children[index]!
+      expect(spread.height).toBe(child.height)
+      expect(spread.offset).toBeCloseTo(child.offset + shift, 1)
+    })
   })
 }

@@ -6,11 +6,14 @@ export interface LayoutRow {
   markup: (id: string) => string
   /** Selector for the component's child elements, each measured against the component's top. */
   children: string
+  /** Where the component's rows sit in a taller grid row: at the top, or centred in the space. */
+  alignment: 'start' | 'center'
 }
 
 export const LAYOUTS: LayoutRow[] = [
   {
     component: 'field',
+    alignment: 'start',
     children: ':scope > *',
     markup: (id) => `<div class="zl-field">
   <label class="zl-field__label" for="${id}-input">Email</label>
@@ -20,6 +23,7 @@ export const LAYOUTS: LayoutRow[] = [
   },
   {
     component: 'radio group',
+    alignment: 'start',
     children: ':scope > *',
     markup: (
       id,
@@ -41,6 +45,7 @@ export const LAYOUTS: LayoutRow[] = [
   },
   {
     component: 'checkbox',
+    alignment: 'start',
     children: ':scope > *',
     markup: (id) => `<div class="zl-checkbox">
   <label class="zl-checkbox__label">
