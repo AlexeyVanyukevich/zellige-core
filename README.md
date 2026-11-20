@@ -32,7 +32,7 @@ attributes, not classes: `disabled`, `aria-invalid="true"`, `aria-busy="true"`,
 behaviour. Render Markdown inside a `.zl-prose` container and leave its elements without classes,
 but put each `table` and each `pre` alone in `<div class="zl-prose__scroll" role="group"
 tabindex="0" aria-label="Table">` (or `"Code block"`), which the CSS does not add, as
-`contract/prose.html` shows; its `footnotes` example shows the footnote markup.
+`contract/prose.html` shows; its `footnotes` example shows the footnote markup and its `task-list` example the task-list markup.
 
 ### Theming
 
