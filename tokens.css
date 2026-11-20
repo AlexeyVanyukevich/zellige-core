@@ -21,7 +21,10 @@
     --zl-accent-strong: light-dark(#234aa6, #a5c1ff);
     --zl-accent-soft: light-dark(#e3eafb, #1f2b45);
     --zl-on-accent: light-dark(#ffffff, #0d1525);
-    --zl-focus: var(--zl-accent);
+    /*
+     * --zl-focus, the focus-ring role, is left unset: its default is the --zl-accent in force on
+     * the focused element. An application may set it.
+     */
     --zl-success: light-dark(#1f7a4d, #6fcf97);
     --zl-success-soft: light-dark(#dcf1e6, #17321f);
     --zl-warning: light-dark(#9a6200, #e5b45a);

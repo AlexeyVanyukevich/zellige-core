@@ -16,9 +16,14 @@
     line-height: var(--zl-leading);
   }
 
-  /* No kit rule sets `outline: none`: this is the one indicator, on everything focusable. */
+  /*
+   * No kit rule sets `outline: none`: this is the one indicator, on everything focusable. The
+   * accent is the fallback here, not a default in tokens.css: a `var()` resolves on the element
+   * that declares it, so a `--zl-focus` set on `:root` would carry the page's accent into a
+   * subtree that re-themes `--zl-accent`.
+   */
   :focus-visible {
-    outline: 2px solid var(--zl-focus);
+    outline: 2px solid var(--zl-focus, var(--zl-accent));
     outline-offset: 2px;
   }
 }
