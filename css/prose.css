@@ -172,6 +172,44 @@
     background: var(--zl-surface-sunk);
   }
 
+  /* A task item is found by its checkbox, not a class: prose is classless. Its label is the
+     item's first child, or the only child of its first paragraph. The box is the platform's
+     disabled input, floated into the list's inline-start padding with a margin box of no width,
+     so the text starts where a plain item's text does and wrapped lines stay under it. */
+  :where(.zl-prose)
+    ul
+    > li:where(
+      :has(> label > input[type='checkbox'], > p:first-child > label > input[type='checkbox'])
+    ) {
+    list-style-type: none;
+  }
+
+  :where(.zl-prose) li > label,
+  :where(.zl-prose) li > p:where(:first-child) > label {
+    display: block;
+  }
+
+  :where(.zl-prose) li > label > input[type='checkbox'],
+  :where(.zl-prose) li > p:where(:first-child) > label > input[type='checkbox'] {
+    float: inline-start;
+    inline-size: 1.125em;
+    block-size: 1.125em;
+    margin-block: calc((var(--zl-leading) * 1em - 1.125em) / 2) 0;
+    margin-inline: calc(-1 * (1.125em + var(--zl-space-1))) var(--zl-space-1);
+    font: inherit;
+    accent-color: var(--zl-accent);
+  }
+
+  /* In an ordered list the number stays: the label makes room for the box after it. */
+  :where(.zl-prose) ol > li:where(:has(> label > input[type='checkbox'])) > label,
+  :where(.zl-prose)
+    ol
+    > li:where(:has(> p:first-child > label > input[type='checkbox']))
+    > p:where(:first-child)
+    > label {
+    padding-inline-start: calc(1.125em + var(--zl-space-1));
+  }
+
   /* `overflow-wrap` is inherited: a nested kit component would wrap where it does not outside.
      The notes block is prose's own, so it keeps the wrapping. */
   :where(.zl-prose [class^='zl-'], .zl-prose [class*=' zl-']) {

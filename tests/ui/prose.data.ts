@@ -21,7 +21,13 @@ export const HEADINGS: HeadingRow[] = [
 ]
 
 /** The contract's examples, in order, each one `.zl-prose`. */
-export const EXAMPLES: string[] = ['document', 'wide-table', 'long-code-line', 'footnotes']
+export const EXAMPLES: string[] = [
+  'document',
+  'wide-table',
+  'long-code-line',
+  'footnotes',
+  'task-list',
+]
 
 export interface NestedRow {
   name: string
@@ -97,3 +103,26 @@ export const BACK_LINKS: BackLinkRow[] = [
     sup: false,
   },
 ]
+
+export interface StepRow {
+  name: string
+  done: boolean
+}
+
+/** The seven steps of the `task-list` example, in document order. */
+export const STEPS: StepRow[] = [
+  { name: 'Pack warm clothes', done: true },
+  { name: 'Bring food for the stay', done: false },
+  { name: 'Set the arrival date', done: false },
+  { name: 'Book the cabin', done: true },
+  { name: 'Pay the deposit', done: false },
+  { name: 'Choose the dates', done: true },
+  { name: 'Confirm the guests', done: false },
+]
+
+/** The first-level children of the example's `.zl-prose`, in order. */
+export const TASK_LISTS: string[] = ['UL', 'UL', 'OL']
+
+/** Text long enough to wrap in a 200px container, with inline code. */
+export const LONG_STEP =
+  'Check the <code>arrival</code> date, then bring dry firewood and warm clothes for every guest'
