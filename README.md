@@ -48,8 +48,9 @@ Map your own colours onto the kit's roles in unlayered CSS. It wins over every k
 }
 ```
 
-`tokens.css` lists every role and its light and dark default. Any element can re-theme its
-subtree the same way.
+`tokens.css` lists every role and its light and dark default, except `--zl-focus`, which it leaves
+unset. Any element can re-theme its subtree the same way. Re-theming `--zl-accent` on a subtree
+re-themes its focus ring too, unless `--zl-focus` is set.
 
 ## Working on it
 
