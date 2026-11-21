@@ -5,6 +5,7 @@ import { openFixture } from './fixture'
 import { openPlayground } from './playground'
 import {
   BACK_LINKS,
+  DEL_RESETS,
   EXAMPLES,
   HEADINGS,
   IMAGES,
@@ -732,5 +733,57 @@ for (const row of IMAGES) {
       })
       expect((await new AxeBuilder({ page }).withTags(WCAG_TAGS).analyze()).violations).toEqual([])
     }
+  })
+}
+
+for (const { name, style, expected } of DEL_RESETS) {
+  test(`a del in prose computes text-decoration-line ${expected} with ${name}`, async ({
+    page,
+  }) => {
+    await openFixture(page, '<div class="zl-prose"><p>From <del>2 pm</del> 4 pm.</p></div>', {
+      style,
+    })
+    const del = page.getByRole('deletion')
+    expect(await del.evaluate((e) => getComputedStyle(e).textDecorationLine)).toBe(expected)
+  })
+}
+
+for (const theme of THEMES) {
+  test(`the document example's del is struck, bare and unfocusable in the ${theme.label} theme`, async ({
+    page,
+  }) => {
+    await openPlayground(page, theme, 'prose')
+    const example = page
+      .locator('.playground__example', {
+        has: page.getByRole('heading', { name: 'document', exact: true }),
+      })
+      .locator('.zl-prose')
+    const del = example.getByRole('deletion')
+    await expect(del).toHaveCount(1)
+    await expect(del).toHaveText('2 pm')
+    const facts = await del.evaluate((e) => {
+      const p = e.parentElement as Element
+      const style = getComputedStyle(e)
+      ;(e as HTMLElement).focus()
+      const focused = document.activeElement === e
+      return {
+        attrs: e.getAttributeNames(),
+        line: style.textDecorationLine,
+        color: style.color,
+        parentColor: getComputedStyle(p).color,
+        parentIsFirst: p === p.parentElement?.firstElementChild?.nextElementSibling,
+        before: getComputedStyle(e, '::before').content,
+        after: getComputedStyle(e, '::after').content,
+        focused,
+      }
+    })
+    expect(facts.attrs).toEqual([])
+    expect(facts.line).toBe('line-through')
+    expect(facts.color).toBe(facts.parentColor)
+    expect(facts.parentIsFirst).toBe(true)
+    expect(facts.before).toBe('none')
+    expect(facts.after).toBe('none')
+    expect(facts.focused).toBe(false)
+    await expect(del.locator('xpath=..')).toHaveText(/Arrival is from 2 pm 4 pm\.\s*$/)
   })
 }
