@@ -5,6 +5,7 @@
      which sets the attributes these rules select on. */
   .zl-tabs {
     display: grid;
+    align-content: start;
   }
 
   .zl-tabs__list {
