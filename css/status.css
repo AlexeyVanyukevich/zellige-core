@@ -7,6 +7,7 @@
   .zl-trouble {
     display: grid;
     gap: var(--zl-space-2);
+    align-content: center;
     justify-items: center;
     padding: var(--zl-space-5) var(--zl-space-4);
     text-align: center;
