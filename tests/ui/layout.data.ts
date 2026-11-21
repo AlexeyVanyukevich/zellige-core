@@ -55,4 +55,13 @@ export const LAYOUTS: LayoutRow[] = [
   <p class="zl-checkbox__description" id="${id}-description">Once a week</p>
 </div>`,
   },
+  {
+    component: 'notice',
+    alignment: 'start',
+    children: ':scope > *',
+    markup: () => `<div class="zl-notice" role="status">
+  <p class="zl-notice__title">Booking saved</p>
+  <div class="zl-notice__body"><p>It is on the calendar for 12 to 14 October.</p></div>
+</div>`,
+  },
 ]
