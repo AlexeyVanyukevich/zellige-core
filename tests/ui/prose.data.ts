@@ -149,3 +149,26 @@ export const IMAGES: ImageRow[] = [
     renders: 'container',
   },
 ]
+
+export interface DelResetRow {
+  name: string
+  /** CSS passed to `openFixture` as `style`; empty for none. */
+  style: string
+  /** The `del`'s computed `text-decoration-line`. */
+  expected: string
+}
+
+/** Prose's line-through against a reset in `zl.base` (loses) and an unlayered one (wins). */
+export const DEL_RESETS: DelResetRow[] = [
+  { name: 'no extra style', style: '', expected: 'line-through' },
+  {
+    name: 'a zl.base reset',
+    style: '@layer zl.base { del { text-decoration-line: none } }',
+    expected: 'line-through',
+  },
+  {
+    name: 'an unlayered reset',
+    style: 'del { text-decoration-line: none }',
+    expected: 'none',
+  },
+]
