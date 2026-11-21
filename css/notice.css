@@ -6,6 +6,7 @@
   .zl-notice {
     display: grid;
     gap: var(--zl-space-1);
+    align-content: start;
     padding: var(--zl-space-3) var(--zl-space-4);
     border: 1px solid var(--zl-accent);
     border-inline-start-width: 4px;
