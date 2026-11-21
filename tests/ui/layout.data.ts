@@ -64,4 +64,18 @@ export const LAYOUTS: LayoutRow[] = [
   <div class="zl-notice__body"><p>It is on the calendar for 12 to 14 October.</p></div>
 </div>`,
   },
+  {
+    component: 'tabs',
+    alignment: 'start',
+    children: ':scope > *',
+    markup: (id) => `<div class="zl-tabs">
+  <div class="zl-tabs__list" id="${id}-tabs" role="tablist" aria-label="Card" aria-orientation="horizontal">
+    <button type="button" class="zl-tabs__tab" role="tab" id="${id}-tab-spec" aria-controls="${id}-panel-spec" aria-selected="true" tabindex="0">Spec</button>
+    <button type="button" class="zl-tabs__tab" role="tab" id="${id}-tab-plan" aria-selected="false" tabindex="-1">Plan</button>
+  </div>
+  <div class="zl-tabs__panel" role="tabpanel" id="${id}-panel-spec" aria-labelledby="${id}-tab-spec" tabindex="0">
+    <p>The design, written and approved before any code.</p>
+  </div>
+</div>`,
+  },
 ]
