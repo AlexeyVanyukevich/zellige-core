@@ -78,4 +78,23 @@ export const LAYOUTS: LayoutRow[] = [
   </div>
 </div>`,
   },
+  {
+    component: 'empty',
+    alignment: 'center',
+    children: ':scope > *',
+    markup: () => `<div class="zl-empty">
+  <p class="zl-empty__title">No open issues</p>
+  <div class="zl-empty__body"><p>New issues appear here as they arrive.</p></div>
+</div>`,
+  },
+  {
+    component: 'trouble',
+    alignment: 'center',
+    children: ':scope > *',
+    markup: () => `<div class="zl-trouble" role="alert">
+  <p class="zl-trouble__title">Couldn't load the issues</p>
+  <p class="zl-trouble__detail">The server did not answer. Check the connection and try again.</p>
+  <button type="button" class="zl-button">Retry</button>
+</div>`,
+  },
 ]
