@@ -35,6 +35,7 @@ browser_suite() {
   docker run --detach --rm --init --ipc=host --name "$name" \
     --publish "127.0.0.1:${BROWSER_PORT}:${BROWSER_PORT}" \
     --volume zellige-core-npm:/root/.npm \
+    --volume "$PWD/tests/ui/fonts.conf:/etc/fonts/local.conf:ro" \
     "mcr.microsoft.com/playwright:v${version}-noble" \
     npx --yes "playwright@${version}" run-server --port "$BROWSER_PORT" --host 0.0.0.0 >/dev/null
   trap "docker stop '$name' >/dev/null 2>&1 || true" EXIT
