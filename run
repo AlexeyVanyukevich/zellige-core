@@ -23,22 +23,25 @@ prepare() {
 # The browsers run in the Playwright image matching the installed runner, so screenshots render
 # the same on every machine; the runner stays on the host and the playground with it. The
 # image tag is read from the installed package, never written here.
-BROWSER_PORT="${ZELLIGE_BROWSER_PORT:-3555}"
-
+# Docker picks the host port, so two checkouts can run the suite at once; ZELLIGE_BROWSER_PORT
+# fixes it instead.
 browser_suite() {
   need_docker
-  local version name
+  local version name port
   version="$(node -p "require('@playwright/test/package.json').version")"
   name="zellige-core-browsers-$$"
 
   step "Starting Playwright ${version}'s browsers in Docker"
   docker run --detach --rm --init --ipc=host --name "$name" \
-    --publish "127.0.0.1:${BROWSER_PORT}:${BROWSER_PORT}" \
+    --publish "127.0.0.1:${ZELLIGE_BROWSER_PORT:-}:3555" \
     --volume zellige-core-npm:/root/.npm \
     --volume "$PWD/tests/ui/fonts.conf:/etc/fonts/local.conf:ro" \
     "mcr.microsoft.com/playwright:v${version}-noble" \
-    npx --yes "playwright@${version}" run-server --port "$BROWSER_PORT" --host 0.0.0.0 >/dev/null
+    npx --yes "playwright@${version}" run-server --port 3555 --host 0.0.0.0 >/dev/null
   trap "docker stop '$name' >/dev/null 2>&1 || true" EXIT
+
+  port="$(docker port "$name" 3555/tcp 2>/dev/null | sed -n 's/^127\.0\.0\.1:\([0-9]*\)$/\1/p' | head -n1 || true)"
+  [ -n "$port" ] || die "Could not read the browser server's host port." "Read: docker ps, docker logs $name"
 
   local waited=0
   until docker logs "$name" 2>&1 | grep -q 'Listening on'; do
@@ -47,8 +50,9 @@ browser_suite() {
     waited=$((waited + 1))
   done
 
+  note "Browser server on ws://127.0.0.1:${port}/"
   step "Browser suite"
-  ZELLIGE_BROWSER_WS="ws://127.0.0.1:${BROWSER_PORT}/" npx playwright test "$@"
+  ZELLIGE_BROWSER_WS="ws://127.0.0.1:${port}/" npx playwright test "$@"
 }
 
 scenario_test() {

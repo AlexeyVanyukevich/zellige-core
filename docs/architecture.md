@@ -216,7 +216,9 @@ are charter's `html` stack: html-validate checks the content model and inline cl
 read from the installed `@playwright/test`, which is pinned exactly. The runner stays on the
 host, connects with `connectOptions: { wsEndpoint, exposeNetwork: '<loopback>' }`, and starts
 Vite there; the browser in the container reaches it through the runner. The container is stopped
-on exit. `ZELLIGE_BROWSER_PORT` moves the port from 3555.
+on exit. Docker publishes the container's port 3555 on a free loopback port for each run, so two
+checkouts can run the suite at once; `ZELLIGE_BROWSER_PORT`, when set, fixes the host port
+instead. The run prints the endpoint it got.
 
 The suite always starts its own Vite in the tree under test, on a free loopback port picked for
 each run, or on `ZELLIGE_PLAYGROUND_PORT` when that is set, and never reuses a running server. A
