@@ -172,3 +172,31 @@ export const DEL_RESETS: DelResetRow[] = [
     expected: 'none',
   },
 ]
+
+export interface TargetOutsideNotesRow {
+  name: string
+  id: string
+  /** The markup inside the prose container, holding one element with this id. */
+  html: string
+}
+
+const targetRow = (
+  name: string,
+  id: string,
+  build: (id: string) => string,
+): TargetOutsideNotesRow => ({ name, id, html: build(id) })
+
+/** Targeted elements outside the notes block: the highlight must not reach them. */
+export const TARGET_OUTSIDE_NOTES: TargetOutsideNotesRow[] = [
+  targetRow(
+    'a list item in a ul',
+    'item-ul',
+    (id) => `<ul><li>One</li><li id="${id}">Two</li></ul>`,
+  ),
+  targetRow(
+    'a list item in an ol',
+    'item-ol',
+    (id) => `<ol><li>One</li><li id="${id}">Two</li></ol>`,
+  ),
+  targetRow('a heading', 'heading', (id) => `<h2 id="${id}">Title</h2><p>Text.</p>`),
+]
