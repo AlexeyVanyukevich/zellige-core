@@ -200,3 +200,7 @@ export const TARGET_OUTSIDE_NOTES: TargetOutsideNotesRow[] = [
   ),
   targetRow('a heading', 'heading', (id) => `<h2 id="${id}">Title</h2><p>Text.</p>`),
 ]
+
+/** An unlayered rule, so it beats the layered `overflow-wrap: anywhere` on the notes block. */
+export const NOTES_WRAP_OFF =
+  '.zl-prose__footnotes, .zl-prose__footnotes li { overflow-wrap: normal }'

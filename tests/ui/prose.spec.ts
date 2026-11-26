@@ -11,6 +11,7 @@ import {
   IMAGES,
   LONG_STEP,
   NESTED,
+  NOTES_WRAP_OFF,
   REFERENCES,
   SAME,
   STEPS,
@@ -179,9 +180,7 @@ test('the footnotes example marks up its references, its notes block and its not
   ])
 })
 
-test('the footnotes example ends each note with back links and keeps a wide URL', async ({
-  page,
-}) => {
+test('the footnotes example ends each note with back links', async ({ page }) => {
   await openPlayground(page, theme, 'prose')
   const block = notes(page)
 
@@ -221,21 +220,46 @@ test('the footnotes example ends each note with back links and keeps a wide URL'
       .last()
       .getAttribute('aria-label'),
   ).toBe('Back to reference 2')
-
-  await page.setViewportSize({ width: 320, height: 800 })
-  const wide = block.getByRole('link', { name: /^https:/ })
-  expect(
-    await wide.evaluate((a) => {
-      const probe = document.createElement('span')
-      probe.style.whiteSpace = 'nowrap'
-      probe.textContent = a.textContent
-      a.parentElement?.append(probe)
-      const width = probe.getBoundingClientRect().width
-      probe.remove()
-      return width
-    }),
-  ).toBeGreaterThan(320)
 })
+
+for (const theme of THEMES) {
+  test(`the footnotes example holds an unbreakable run wider than 320px in the ${theme.label} theme`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 320, height: 800 })
+    await openPlayground(page, theme, 'prose')
+    const wide = notes(page).getByRole('link', { name: /^https:/ })
+    expect(
+      await wide.evaluate((a) => {
+        const probe = document.createElement('span')
+        probe.style.cssText = 'display:inline-block;inline-size:min-content;overflow-wrap:normal'
+        probe.textContent = a.textContent
+        a.parentElement?.append(probe)
+        const width = probe.getBoundingClientRect().width
+        probe.remove()
+        return width
+      }),
+    ).toBeGreaterThan(320)
+  })
+
+  test(`at 320px the notes block is what keeps the page from scrolling sideways in the ${theme.label} theme`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 320, height: 800 })
+    await openPlayground(page, theme, 'prose')
+    const scrolls = () =>
+      page.evaluate(() => ({
+        scroll: document.documentElement.scrollWidth,
+        client: document.documentElement.clientWidth,
+      }))
+
+    const before = await scrolls()
+    expect(before.scroll).toBeLessThanOrEqual(before.client)
+    await page.addStyleTag({ content: NOTES_WRAP_OFF })
+    const after = await scrolls()
+    expect(after.scroll).toBeGreaterThan(after.client)
+  })
+}
 
 test('a reference does not make its line taller', async ({ page }) => {
   await openFixture(
