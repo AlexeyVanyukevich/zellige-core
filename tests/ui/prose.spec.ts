@@ -14,6 +14,7 @@ import {
   REFERENCES,
   SAME,
   STEPS,
+  TARGET_OUTSIDE_NOTES,
   TASK_LISTS,
   WRAPPERS,
 } from './prose.data'
@@ -745,6 +746,23 @@ for (const { name, style, expected } of DEL_RESETS) {
     })
     const del = page.getByRole('deletion')
     expect(await del.evaluate((e) => getComputedStyle(e).textDecorationLine)).toBe(expected)
+  })
+}
+
+for (const { name, id, html } of TARGET_OUTSIDE_NOTES) {
+  test(`${name} that is the target has no background`, async ({ page }) => {
+    await openFixture(page, `<div class="zl-prose">${html}</div>`)
+    await page.evaluate((hash) => {
+      location.hash = hash
+    }, id)
+    // A li has no role or name to find it by, so the element is read by its id.
+    const facts = await page.evaluate((target) => {
+      const e = document.getElementById(target)
+      return (
+        e && { targeted: e.matches(':target'), background: getComputedStyle(e).backgroundColor }
+      )
+    }, id)
+    expect(facts).toEqual({ targeted: true, background: 'rgba(0, 0, 0, 0)' })
   })
 }
 
