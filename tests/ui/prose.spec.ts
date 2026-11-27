@@ -11,10 +11,10 @@ import {
   IMAGES,
   LONG_STEP,
   NESTED,
-  NOTES_WRAP_OFF,
   REFERENCES,
   SAME,
   STEPS,
+  WRAP_PROOFS,
   TARGET_OUTSIDE_NOTES,
   TASK_LISTS,
   WRAPPERS,
@@ -223,42 +223,45 @@ test('the footnotes example ends each note with back links', async ({ page }) =>
 })
 
 for (const theme of THEMES) {
-  test(`the footnotes example holds an unbreakable run wider than 320px in the ${theme.label} theme`, async ({
-    page,
-  }) => {
-    await page.setViewportSize({ width: 320, height: 800 })
-    await openPlayground(page, theme, 'prose')
-    const wide = notes(page).getByRole('link', { name: /^https:/ })
-    expect(
-      await wide.evaluate((a) => {
-        const probe = document.createElement('span')
-        probe.style.cssText = 'display:inline-block;inline-size:min-content;overflow-wrap:normal'
-        probe.textContent = a.textContent
-        a.parentElement?.append(probe)
-        const width = probe.getBoundingClientRect().width
-        probe.remove()
-        return width
-      }),
-    ).toBeGreaterThan(320)
-  })
+  for (const row of WRAP_PROOFS) {
+    const scope = (page: Page) => (row.within ? page.locator(row.within) : documentProse(page))
+    test(`the ${row.example} example holds an unbreakable run wider than 320px in the ${theme.label} theme`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 320, height: 800 })
+      await openPlayground(page, theme, 'prose')
+      const wide = scope(page).getByRole('link', { name: row.link })
+      expect(
+        await wide.evaluate((a) => {
+          const probe = document.createElement('span')
+          probe.style.cssText = 'display:inline-block;inline-size:min-content;overflow-wrap:normal'
+          probe.textContent = a.textContent
+          a.parentElement?.append(probe)
+          const width = probe.getBoundingClientRect().width
+          probe.remove()
+          return width
+        }),
+      ).toBeGreaterThan(320)
+    })
 
-  test(`at 320px the notes block is what keeps the page from scrolling sideways in the ${theme.label} theme`, async ({
-    page,
-  }) => {
-    await page.setViewportSize({ width: 320, height: 800 })
-    await openPlayground(page, theme, 'prose')
-    const scrolls = () =>
-      page.evaluate(() => ({
-        scroll: document.documentElement.scrollWidth,
-        client: document.documentElement.clientWidth,
-      }))
+    test(`at 320px the ${row.keeper} is what keeps the page from scrolling sideways in the ${theme.label} theme`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 320, height: 800 })
+      await openPlayground(page, theme, 'prose')
+      const scrolls = () =>
+        page.evaluate(() => ({
+          scroll: document.documentElement.scrollWidth,
+          client: document.documentElement.clientWidth,
+        }))
 
-    const before = await scrolls()
-    expect(before.scroll).toBeLessThanOrEqual(before.client)
-    await page.addStyleTag({ content: NOTES_WRAP_OFF })
-    const after = await scrolls()
-    expect(after.scroll).toBeGreaterThan(after.client)
-  })
+      const before = await scrolls()
+      expect(before.scroll).toBeLessThanOrEqual(before.client)
+      await page.addStyleTag({ content: row.style })
+      const after = await scrolls()
+      expect(after.scroll).toBeGreaterThan(after.client)
+    })
+  }
 }
 
 test('a reference does not make its line taller', async ({ page }) => {
@@ -829,3 +832,22 @@ for (const theme of THEMES) {
     await expect(del.locator('xpath=..')).toHaveText(/Arrival is from 2 pm 4 pm\.\s*$/)
   })
 }
+
+const documentProse = (page: Page) =>
+  page
+    .locator('.playground__example', {
+      has: page.getByRole('heading', { name: 'document', exact: true }),
+    })
+    .locator('.zl-prose')
+
+test("the document example's container and first paragraph compute overflow-wrap anywhere", async ({
+  page,
+}) => {
+  await openPlayground(page, THEMES[0]!, 'prose')
+  const prose = documentProse(page)
+  const wraps = await prose.evaluate((e) => ({
+    container: getComputedStyle(e).overflowWrap,
+    paragraph: getComputedStyle(e.querySelector('p') as Element).overflowWrap,
+  }))
+  expect(wraps).toEqual({ container: 'anywhere', paragraph: 'anywhere' })
+})

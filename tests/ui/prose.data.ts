@@ -204,3 +204,29 @@ export const TARGET_OUTSIDE_NOTES: TargetOutsideNotesRow[] = [
 /** An unlayered rule, so it beats the layered `overflow-wrap: anywhere` on the notes block. */
 export const NOTES_WRAP_OFF =
   '.zl-prose__footnotes, .zl-prose__footnotes li { overflow-wrap: normal }'
+
+/** An unlayered rule, so it beats the layered `overflow-wrap: anywhere` on `.zl-prose`. */
+export const PROSE_WRAP_OFF = '.zl-prose { overflow-wrap: normal }'
+
+/** The unbreakable-run probe and its control test, once per example that holds a wide URL. */
+export const WRAP_PROOFS: {
+  example: 'footnotes' | 'document'
+  within?: string
+  link: RegExp
+  keeper: 'notes block' | 'prose container'
+  style: string
+}[] = [
+  {
+    example: 'footnotes',
+    within: 'section.zl-prose__footnotes',
+    link: /^https:/,
+    keeper: 'notes block',
+    style: NOTES_WRAP_OFF,
+  },
+  {
+    example: 'document',
+    link: /^https:\/\/example\.com\/cabins\/north\/booking-terms\//,
+    keeper: 'prose container',
+    style: PROSE_WRAP_OFF,
+  },
+]
