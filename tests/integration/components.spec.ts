@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { expect, test } from '@playwright/test'
-import { contractRows, parseRows } from './readme.data.js'
+import { contractRows, parseRows } from './components.data.js'
 
 const root = join(import.meta.dirname, '../..')
 
@@ -42,7 +42,7 @@ test('contract/ and the dataset hold the same files', () => {
   const files = readdirSync(join(root, 'contract')).filter((file) => file.endsWith('.html'))
   const rowFiles = contractRows.map((row) => row.file)
   for (const file of files) {
-    expect(rowFiles, `${file} has no row in readme.data.ts`).toContain(file)
+    expect(rowFiles, `${file} has no row in components.data.ts`).toContain(file)
   }
   for (const row of contractRows) {
     expect(files, `the row for ${row.file} has no file in contract/`).toContain(row.file)
